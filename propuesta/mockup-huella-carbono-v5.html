@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Huella Córdoba · Mockup borrador</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EDF1F2; --surface:#FFFFFF; --sunk:#E1E9EB; --ink:#10282D; --ink2:#4B626A; --line:#CBD6D9;
+  --brand:#0F4C57; --on-brand:#FFFFFF;
+  --a1:#0E6B6B; --a2:#D9950A; --a3:#6478CC; --conv:#5C7480; --ren:#2F9E62;
+  --ok:#23724A; --warn:#8A5208; --err:#B3261E; --focus:#2264D1;
+  --m1:var(--a1); --m2:var(--a2); --m3:var(--a3);
+  color-scheme:light;
+  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B181C; --surface:#12262B; --sunk:#0E1F24; --ink:#E6F0F2; --ink2:#9DB5BB; --line:#26414A;
+    --brand:#7CCAD5; --on-brand:#062329; --a1:#3FB5AE; --a2:#F0B429; --a3:#93A4F0; --conv:#8FA6B0; --ren:#5CC48A;
+    --ok:#5CC48A; --warn:#E8B160; --err:#F2887F; --focus:#7FB2FF; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B181C; --surface:#12262B; --sunk:#0E1F24; --ink:#E6F0F2; --ink2:#9DB5BB; --line:#26414A;
+  --brand:#7CCAD5; --on-brand:#062329; --a1:#3FB5AE; --a2:#F0B429; --a3:#93A4F0; --conv:#8FA6B0; --ren:#5CC48A;
+  --ok:#5CC48A; --warn:#E8B160; --err:#F2887F; --focus:#7FB2FF; color-scheme:dark;
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 "Public Sans",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2,h3,.disp{font-family:"Bricolage Grotesque","Public Sans",system-ui,sans-serif;line-height:1.08;margin:0;letter-spacing:-.015em;font-weight:700}
+h1{font-size:clamp(1.9rem,4.2vw,2.6rem)} h2{font-size:1.25rem} h3{font-size:1.05rem}
+p{margin:0} a{color:inherit}
+.muted{color:var(--ink2)} .small{font-size:.85rem;color:var(--ink2)}
+.d{display:block;font-size:.82rem;color:var(--ink2);font-weight:400}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+button{font:inherit;color:inherit}
+
+/* encabezado y menú */
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;align-items:center;gap:16px;padding:12px clamp(16px,4vw,40px);background:var(--surface);border-bottom:1px solid var(--line)}
+body[data-ctx="itec"] .hdr{background:var(--brand);color:var(--on-brand);border-bottom:0;--m1:var(--on-brand);--m2:#F0B429;--m3:#A9B8F5}
+.brand{display:flex;align-items:center;gap:10px;font-family:"Bricolage Grotesque","Public Sans",sans-serif;font-weight:700;font-size:1.15rem;white-space:nowrap}
+.brand small{font-family:"Public Sans",sans-serif;font-weight:500;font-size:.8rem;opacity:.85;margin-left:4px}
+.spacer{flex:1}
+.only-public,.only-empresa,.only-itec{display:none}
+body[data-ctx="public"] .only-public{display:flex;gap:8px}
+body[data-ctx="empresa"] .only-empresa,body[data-ctx="itec"] .only-itec{display:inline}
+body[data-ctx="itec"] .brand small.only-itec{display:inline}
+.who{font-size:.9rem;opacity:.85;white-space:nowrap}
+.menu-btn{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--line);border-radius:10px;padding:8px 14px;cursor:pointer;font-weight:600;color:inherit}
+body[data-ctx="itec"] .menu-btn{border-color:color-mix(in srgb,var(--on-brand) 45%,transparent)}
+.menu-btn:hover{background:color-mix(in srgb,currentColor 8%,transparent)}
+.menu{position:absolute;right:clamp(16px,4vw,40px);top:calc(100% + 8px);width:min(340px,calc(100vw - 32px));background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 40px rgba(0,0,0,.22);padding:10px;max-height:calc(100vh - 110px);overflow:auto}
+.menu h2{font-size:.85rem;color:var(--ink2);font-weight:600;padding:10px 12px 4px;letter-spacing:0}
+.menu a{display:block;padding:9px 12px;border-radius:8px;text-decoration:none;font-weight:500}
+.menu a.sub{padding-left:30px;font-size:.93rem}
+.menu a:hover{background:var(--sunk)}
+.menu a[aria-current="page"]{background:color-mix(in srgb,var(--brand) 13%,var(--surface));font-weight:700}
+
+/* base */
+.frame{max-width:1200px;margin:0 auto}
+.wrap{padding:28px clamp(16px,4vw,40px) 72px}
+.pagehead{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px}
+.pagehead .muted{margin-top:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:.7rem 1.15rem;border-radius:8px;border:1px solid transparent;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;text-decoration:none}
+.btn.primary{background:var(--brand);color:var(--on-brand)}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--ink)}
+.btn.inv{background:transparent;border-color:color-mix(in srgb,var(--on-brand) 55%,transparent);color:var(--on-brand)}
+.btn.sm{padding:.45rem .8rem;font-size:.9rem}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.panel>h2{margin-bottom:14px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:999px;font-size:.8rem;font-weight:600;background:var(--sunk);white-space:nowrap}
+.dot{width:9px;height:9px;border-radius:50%;background:var(--c,var(--ink2));display:inline-block;flex:none}
+.s1{--c:var(--a1)} .s2{--c:var(--a2)} .s3{--c:var(--a3)}
+.chip.st{--c:var(--ink2);background:color-mix(in srgb,var(--c) 14%,var(--surface))}
+.chip.st-pend{--c:var(--a2)} .chip.st-obs{--c:var(--err)} .chip.st-ok{--c:var(--ok)}
+.chip.onbrand{background:var(--surface);color:var(--ink)}
+.chip.alert{--c:var(--err);background:color-mix(in srgb,var(--err) 14%,var(--surface))}
+.tblwrap{overflow-x:auto}
+.tbl{width:100%;border-collapse:collapse;min-width:560px}
+.tbl th{text-align:left;font-size:.85rem;color:var(--ink2);font-weight:600;padding:8px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.tbl td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl .num,.tbl th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tbl tfoot td{font-weight:700;border-top:2px solid var(--ink);border-bottom:0}
+.tbl tr.flagrow td{background:color-mix(in srgb,var(--err) 8%,var(--surface))}
+.tbl tr.sel td{background:color-mix(in srgb,var(--brand) 10%,var(--surface))}
+.tbl tr.hl td{background:color-mix(in srgb,var(--ren) 12%,var(--surface))}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.legend li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center}
+.legend .v{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.okmark{color:var(--ok);font-weight:600;font-size:.88rem;white-space:nowrap}
+
+/* formularios */
+.field{margin-bottom:20px}
+.field .lbl{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.field label,.lbl-t{font-weight:600}
+.req{margin-left:auto;font-size:.78rem;color:var(--ink2)} .req.need{color:var(--warn);font-weight:600}
+.control{display:flex;align-items:center;background:var(--surface);border:1px solid var(--ink2);border-radius:8px;overflow:hidden}
+.control:focus-within{outline:3px solid var(--focus);outline-offset:1px}
+.control input,.control select,.control textarea{flex:1;min-width:0;border:0;background:transparent;color:inherit;font:inherit;padding:.65rem .8rem;outline:0;resize:vertical}
+.control .unit{padding:0 .9rem;color:var(--ink2);font-size:.9rem;white-space:nowrap;background:var(--sunk);align-self:stretch;display:flex;align-items:center;border-left:1px solid var(--line)}
+.tip{width:22px;height:22px;border-radius:50%;border:1px solid var(--ink2);background:transparent;cursor:pointer;font-size:.8rem;font-weight:700;line-height:1;color:var(--ink2);display:inline-flex;align-items:center;justify-content:center;padding:0}
+.tip[aria-expanded="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand)}
+.help{font-size:.9rem;background:var(--sunk);border-radius:8px;padding:10px 12px;margin-bottom:8px}
+.proof{margin-top:8px}
+.attach{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid var(--line);background:var(--sunk);border-radius:8px;padding:8px 12px;margin-top:8px;font-size:.9rem}
+.ext{background:var(--ink);color:var(--bg);font-size:.7rem;font-weight:700;padding:2px 6px;border-radius:4px;letter-spacing:.02em}
+.ext.sm{font-size:.62rem}
+.attach .fs{color:var(--ink2)} .attach .okmark{margin-left:auto}
+
+/* inicio */
+.hero{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,5vw,64px);align-items:center;padding:clamp(28px,6vw,72px) clamp(16px,4vw,40px)}
+.hero h1{font-size:clamp(2.3rem,6vw,4rem);font-weight:800;letter-spacing:-.03em;margin-bottom:18px}
+.lead{font-size:1.1rem;max-width:56ch;margin-bottom:24px}
+.est{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:24px}
+.est .out{display:flex;align-items:baseline;gap:10px;margin:18px 0 6px;flex-wrap:wrap}
+.est .num{font-family:"Bricolage Grotesque","Public Sans",sans-serif;font-weight:800;font-size:clamp(2.6rem,7vw,3.8rem);line-height:1;letter-spacing:-.03em;color:var(--brand)}
+.band{padding:8px clamp(16px,4vw,40px) 48px}
+.band h2{margin-bottom:22px;font-size:1.5rem}
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.steps3{padding:0;margin:0}.steps3 li{list-style:none}
+.steps3 .n{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:2.4rem;color:var(--brand);line-height:1}
+.steps3 h3{margin:8px 0 6px}
+.scope{border-top:5px solid var(--c);padding-top:14px}.scope h3{margin-bottom:6px}
+.foot{padding:24px clamp(16px,4vw,40px);border-top:1px solid var(--line);color:var(--ink2);font-size:.88rem}
+
+/* registro */
+.reg{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:clamp(24px,5vw,56px);align-items:start}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.aside{border-left:4px solid var(--brand);padding-left:20px}
+.aside ul{padding-left:1.1rem;margin:10px 0 18px}
+
+/* panel y gráficos */
+.dash{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.wide{grid-column:1/-1}
+.total{background:var(--brand);color:var(--on-brand);border-radius:14px;padding:28px;display:flex;flex-direction:column;gap:6px;justify-content:center}
+.total .big{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.total .big span:first-child{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(3.4rem,8vw,5.2rem);letter-spacing:-.04em;line-height:1}
+.total .u{font-size:1.2rem;font-weight:600}
+.delta{font-weight:700}
+.donut-row{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.donut-row svg{width:170px;height:170px;flex:none}
+.donut-row .legend{flex:1;min-width:200px}
+.callout{margin-top:14px;padding:10px 14px;border-radius:10px;background:color-mix(in srgb,var(--ren) 14%,var(--surface))}
+.sb{display:grid;grid-template-columns:52px 1fr 88px;gap:12px;align-items:center;margin:10px 0}
+.sb-track{background:var(--sunk);border-radius:6px;height:26px;overflow:hidden}
+.sb-bar{display:flex;height:100%}.sb-bar i{display:block}
+.sb .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.recs{display:grid;gap:14px;margin:0;padding:0;list-style:none}
+.recs li{display:grid;grid-template-columns:auto 1fr;gap:12px}
+.recs strong{display:block}
+.mlist{list-style:none;margin:0;padding:0}
+.mlist li{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.mlist li:last-child{border-bottom:0}
+.mlist .p{font-family:"Bricolage Grotesque",sans-serif;font-weight:700;font-size:1.3rem}
+
+/* asistente */
+.steps{display:flex;gap:6px;overflow-x:auto;margin-bottom:26px;border-bottom:1px solid var(--line)}
+.step{display:block;text-decoration:none;padding:10px 14px 12px;border-bottom:4px solid transparent;flex:none;min-width:150px}
+.step b{display:block;font-size:.95rem}
+.step span{font-size:.8rem;color:var(--ink2)}
+.step[aria-current="step"]{border-bottom-color:var(--brand)}
+.step.done b::before{content:"✓ ";color:var(--ok)}
+.wz{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:36px;align-items:start}
+.wpanel h2{font-size:1.5rem;margin-bottom:6px}
+.wpanel .intro{margin-bottom:22px;color:var(--ink2);max-width:60ch}
+.banner{background:var(--sunk);border-radius:10px;padding:12px 14px;margin:18px 0;font-size:.92rem}
+.wfoot{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px;padding-top:18px;border-top:1px solid var(--line)}
+.matrix{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-top:6px}
+.meter{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.meter .lbl-t{font-size:.9rem;color:var(--ink2);font-weight:500}
+.meter .tot{display:flex;align-items:baseline;gap:8px;margin:4px 0 14px}
+.meter .tot b{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:3rem;letter-spacing:-.03em;line-height:1}
+.mbar{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--sunk);margin-bottom:16px}
+.mbar.big{height:22px;margin:10px 0}
+.mbar i{display:block}
+.mrows{display:grid;gap:8px;font-size:.92rem}
+.mrows div{display:flex;align-items:center;gap:8px}
+.mrows span.v{margin-left:auto;font-variant-numeric:tabular-nums;font-weight:600}
+.meter .fine{margin-top:14px;font-size:.78rem;color:var(--ink2)}
+.save{font-size:.88rem;color:var(--ink2)}
+
+/* backoffice ITEC */
+.tabs{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px}
+.tab{display:inline-flex;gap:8px;align-items:center;padding:8px 14px;border-radius:999px;border:1px solid var(--line);background:var(--surface);text-decoration:none;font-weight:500;white-space:nowrap}
+.tab b{font-variant-numeric:tabular-nums;color:var(--ink2)}
+.tab[aria-current="true"]{background:var(--brand);color:var(--on-brand);border-color:var(--brand);font-weight:700}
+.tab[aria-current="true"] b{color:inherit}
+.filters{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:14px}
+.filters .field{margin-bottom:10px}
+.crumb{font-size:.9rem;color:var(--ink2);margin-bottom:12px}
+.crumb a{color:var(--brand);font-weight:600}
+.kpis{display:grid;gap:20px;margin-bottom:24px}
+.kpis.k3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.kpis.k4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.kpi b{display:block;font-family:"Bricolage Grotesque",sans-serif;font-size:2.3rem;font-weight:800;letter-spacing:-.03em;line-height:1.1}
+.audit{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(0,.9fr);gap:20px;align-items:start}
+.tbl-audit{min-width:0}
+.tbl-audit th,.tbl-audit td{padding:11px 5px}
+.tbl-band{min-width:900px}
+.tbl-band th,.tbl-band td{padding:11px 8px}
+.tbl-band .cuit{white-space:nowrap}
+.lnk{text-decoration:underline;color:var(--brand);font-size:.85rem;font-weight:600}
+.src{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:18px}
+.src-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.src-t{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.src-title{font-weight:700;font-size:1.02rem}
+.src-t .req{margin-left:4px}
+.src-total{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+.src-total b{font-family:"Bricolage Grotesque",sans-serif;font-size:1.8rem;font-weight:800;letter-spacing:-.02em;line-height:1}
+.chip.auto{--c:var(--ok);background:color-mix(in srgb,var(--ok) 14%,var(--surface));align-self:center}
+.src-rows{border-top:1px solid var(--line)}
+.srow{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}
+.srow.more{grid-template-columns:1fr}
+.src-n b{font-weight:600;font-size:.92rem;display:block}
+.amt{display:flex;align-items:center;border:1px solid var(--ink2);border-radius:8px;overflow:hidden;background:var(--surface)}
+.amt input{width:100px;border:0;background:transparent;color:inherit;font:inherit;padding:.4rem .6rem;text-align:right;outline:0}
+.amt .u{padding:0 .6rem;font-size:.85rem;color:var(--ink2);background:var(--sunk);align-self:stretch;display:flex;align-items:center;border-left:1px solid var(--line)}
+.src-f{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.pager{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+.pager{flex-wrap:wrap;justify-content:center}.pager .btn,.pager .small{white-space:nowrap}.pager .btn{padding:.35rem .65rem;font-size:.85rem}
+.tbl-audit .chip{padding:2px 8px}
+.paper{background:#FFFFFF;color:#222;border:1px solid #C9CFD2;border-radius:6px;padding:18px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.paper-h{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin-bottom:10px;border-bottom:2px solid #222;padding-bottom:8px}
+.paper-h span{font-size:.8rem;color:#555}
+.paper-row{display:flex;justify-content:space-between;gap:10px;font-size:.85rem;color:#444}
+.paper-hl{margin:14px 0;padding:10px 12px;border:2px solid #D9950A;background:#FFF6DC;border-radius:6px;display:flex;justify-content:space-between;gap:10px;color:#222}
+.ln{height:9px;background:#E4E7E9;border-radius:4px;margin:10px 0}
+.w40{width:40%}.w50{width:50%}.w60{width:60%}.w70{width:70%}.w80{width:80%}
+.cmp{display:flex;gap:18px;align-items:center;margin-top:14px;flex-wrap:wrap}
+.cmp span{display:block;font-size:.8rem}
+.okc{margin-left:auto;font-weight:700;color:var(--ok)}
+.checks{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+.checks li{padding-left:26px;position:relative}
+.checks li::before{position:absolute;left:0;font-weight:800}
+.checks li.ok::before{content:"✓";color:var(--ok)}
+.checks li.warn::before{content:"!";color:var(--warn)}
+.actionbar{margin-top:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:16px 20px;background:var(--surface);border:1px solid var(--line);border-radius:14px}
+.hb{display:grid;grid-template-columns:minmax(120px,200px) 1fr 120px;gap:12px;align-items:center;margin:10px 0}
+.hb .tr{background:var(--sunk);height:22px;border-radius:5px;overflow:hidden}
+.hb .tr i{display:block;height:100%;background:var(--brand);border-radius:5px}
+.hb .v{text-align:right;font-variant-numeric:tabular-nums;font-size:.92rem}
+.tbl input.fv{width:96px;border:1px solid var(--ink2);border-radius:6px;padding:6px 8px;background:var(--surface);color:var(--ink);font:inherit;text-align:right}
+.log{list-style:none;margin:0;padding:0;display:grid;gap:10px;font-size:.92rem}
+.log li{padding-left:14px;border-left:3px solid var(--line)}
+.note{background:var(--sunk);border-style:dashed}
+
+@media (max-width:900px){
+  .hero,.reg,.dash,.wz,.audit{grid-template-columns:1fr}
+  .cols3,.kpis.k3{grid-template-columns:1fr}
+  .kpis.k4{grid-template-columns:1fr 1fr}
+  .filters{grid-template-columns:1fr 1fr}
+  .wz .meter{order:-1;padding:14px 16px;top:calc(env(safe-area-inset-top,0px) + 70px);z-index:5}
+  .meter .tot{margin-bottom:8px}.meter .tot b{font-size:2rem}
+  .meter .mrows,.meter .fine{display:none}
+  .mbar{margin-bottom:0}
+  .two{grid-template-columns:1fr}
+  body[data-ctx] .who{display:none}
+  .hb{grid-template-columns:1fr 100px;grid-template-areas:"l v" "t t"}.hb .l{grid-area:l}.hb .tr{grid-area:t}.hb .v{grid-area:v}
+}
+@media (max-width:600px){
+  .only-public .btn.ghost{display:none}
+  .kpis.k4{grid-template-columns:1fr}
+  .mlist li{grid-template-columns:56px 1fr}.mlist li .btn{grid-column:1/-1;justify-self:start}
+}
+</style>
+</head>
+<body data-ctx="public">
+<header class="hdr">
+  <div class="brand"><svg width="26" height="26" viewBox="0 0 42 42" aria-hidden="true"><g fill="none" stroke-width="7"><circle cx="21" cy="21" r="15.9155" style="stroke:var(--m1)" stroke-dasharray="45 55" stroke-dashoffset="25"/><circle cx="21" cy="21" r="15.9155" style="stroke:var(--m2)" stroke-dasharray="47 53" stroke-dashoffset="-20"/><circle cx="21" cy="21" r="15.9155" style="stroke:var(--m3)" stroke-dasharray="8 92" stroke-dashoffset="-67"/></g></svg><span>Huella Córdoba</span><small class="only-itec">Backoffice ITEC</small></div>
+  <div class="spacer"></div>
+  <div class="hdr-actions only-public"><a class="btn ghost sm" href="#panel">Ingresar</a><a class="btn primary sm" href="#registro">Crear cuenta</a></div>
+  <span class="who only-empresa">Metalúrgica Sierras S.A.</span>
+  <span class="who only-itec">Técnico ITEC</span>
+  <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu">
+    <svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true"><path d="M2 5h16M2 10h16M2 15h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <span class="menu-lbl">Menú</span>
+  </button>
+  <nav class="menu" id="menu" aria-label="Pantallas del mockup" hidden>
+  <h2>Empresa</h2>
+  <a href="#inicio" data-s="inicio">Inicio</a>
+  <a href="#registro" data-s="registro">Registro</a>
+  <a href="#panel" data-s="panel">Panel de la empresa</a>
+  <a href="#paso1" data-s="paso1">Nueva medición · Paso 1, Energía</a>
+  <a href="#paso2" data-s="paso2" class="sub">Paso 2, Combustibles y flota</a>
+  <a href="#paso3" data-s="paso3" class="sub">Paso 3, Residuos y viajes</a>
+  <a href="#paso4" data-s="paso4" class="sub">Paso 4, Revisión y envío</a>
+  <h2>Backoffice ITEC</h2>
+  <a href="#bandeja" data-s="bandeja">Bandeja de empresas</a>
+  <a href="#auditoria" data-s="auditoria">Auditoría de una empresa</a>
+  <a href="#factores" data-s="factores">Factores de emisión</a>
+  <a href="#observatorio" data-s="observatorio">Observatorio</a>
+</nav>
+</header>
+<main class="frame">
+<section class="screen" id="s-inicio">
+  <div class="hero">
+    <div>
+      <h1>Conocé cuánto emite tu empresa. Sin planillas de cálculo.</h1>
+      <p class="lead">Cargá tus consumos de electricidad, combustible y residuos junto con tu respaldo. La plataforma calcula tu huella de carbono con los factores vigentes del ITEC y el instituto valida tu declaración antes de emitir el reporte y el certificado oficial.</p>
+      <div class="row"><a class="btn primary" href="#registro">Crear cuenta de empresa</a><a class="btn ghost" href="#panel">Ver un panel de ejemplo</a></div>
+      <p class="small" style="margin-top:18px">Basada en la calculadora del Instituto de Transformación Energética de Córdoba (ITEC).</p>
+    </div>
+    <div class="est">
+      <h2>Probá con tu factura de luz</h2>
+      <div class="field" style="margin:14px 0 0">
+        <label for="est-kwh" class="lbl-t">Consumo mensual que figura en tu factura de EPEC</label>
+        <div class="control" style="margin-top:6px"><input id="est-kwh" value="26.000"><span class="unit">kWh</span></div>
+      </div>
+      <div class="out"><span class="num">87,4</span><span>toneladas de CO₂e por año</span></div>
+      <p class="small">Estimación de Alcance 2 con el factor eléctrico vigente (0,28 kg CO₂e/kWh, valor de ejemplo).</p>
+    </div>
+  </div>
+  <div class="band">
+    <h2>Cómo funciona</h2>
+    <ol class="cols3 steps3">
+      <li><div class="n">1</div><h3>Registrá tu empresa</h3><p class="muted">Ingresás los datos básicos: CUIT, sector y categoría. Tus datos son privados y solo los ve tu empresa.</p></li>
+      <li><div class="n">2</div><h3>Cargá tus consumos con respaldo</h3><p class="muted">Un asistente te guía paso a paso. Cada dato lleva su comprobante, como la factura de EPEC, y tu avance se guarda solo.</p></li>
+      <li><div class="n">3</div><h3>El ITEC valida y emite tu reporte</h3><p class="muted">El instituto revisa tu declaración. Al aprobarla recibís el reporte final, los gráficos y el certificado oficial.</p></li>
+    </ol>
+  </div>
+  <div class="band">
+    <h2>Qué se mide</h2>
+    <div class="cols3">
+      <div class="scope s1"><h3>Alcance 1: emisiones directas</h3><p class="muted">Combustible que quema tu empresa: flota propia, calderas y hornos.</p></div>
+      <div class="scope s2"><h3>Alcance 2: energía comprada</h3><p class="muted">La electricidad de la red. Si generás energía renovable propia, por ejemplo con paneles solares, se reconoce por separado.</p></div>
+      <div class="scope s3"><h3>Alcance 3: otras indirectas</h3><p class="muted">Residuos, viajes de trabajo y logística de terceros. Es opcional: podés completarlo más adelante.</p></div>
+    </div>
+  </div>
+  <div class="foot">Metodología alineada con el GHG Protocol y la norma ISO 14064-1. Nombre de la plataforma provisorio.</div>
+</section>
+<section class="screen" id="s-registro" hidden>
+  <div class="wrap">
+    <div class="pagehead"><div><h1>Creá la cuenta de tu empresa</h1><p class="muted">Lleva menos de tres minutos.</p></div></div>
+    <div class="reg">
+      <div class="panel">
+        <div class="two">
+          <div class="field"><div class="lbl"><label for="r-name">Razón social</label></div><div class="control"><input id="r-name" value="Metalúrgica Sierras S.A."></div></div>
+          <div class="field"><div class="lbl"><label for="r-cuit">CUIT</label></div><div class="control"><input id="r-cuit" value="30-71234567-8"></div></div>
+        </div>
+        <div class="two">
+          <div class="field"><div class="lbl"><label for="r-sector">Sector industrial</label></div><div class="control"><select id="r-sector"><option>Metalmecánica</option><option>Alimentos y bebidas</option><option>Automotriz y autopartes</option><option>Construcción</option><option>Servicios y software</option><option>Comercio</option><option>Otro</option></select></div></div>
+          <div class="field"><div class="lbl"><label for="r-size">Categoría según Certificado MiPyME</label></div><div class="control"><select id="r-size"><option>Micro</option><option>Pequeña</option><option selected>Mediana tramo 1</option><option>Mediana tramo 2</option><option>Grande (sin Certificado MiPyME)</option></select></div><p class="small" style="margin-top:5px">Usá la categoría que figura en tu Certificado MiPyME vigente.</p></div>
+        </div>
+        <div class="two">
+          <div class="field"><div class="lbl"><label for="r-mail">Email de contacto</label></div><div class="control"><input id="r-mail" value="ambiente@metalurgicasierras.com.ar"></div></div>
+          <div class="field"><div class="lbl"><label for="r-pass">Contraseña</label></div><div class="control"><input id="r-pass" type="password" value="contraseña123"></div></div>
+        </div>
+        <div class="row"><a class="btn primary" href="#panel">Crear cuenta y empezar</a><a class="btn ghost" href="#inicio">Volver</a></div>
+      </div>
+      <aside class="aside">
+        <h2>Tené a mano</h2>
+        <ul>
+          <li>Facturas de electricidad (EPEC) del año, en PDF</li>
+          <li>Reporte del inversor, si tenés paneles solares</li>
+          <li>Litros de combustible de tu flota</li>
+          <li>Consumo de gas natural de calderas y hornos</li>
+          <li>Toneladas de residuos, si las medís</li>
+        </ul>
+        <p class="small">Cada empresa ve solo sus propios datos. El ITEC revisa tus declaraciones y solo publica totales agregados y anonimizados.</p>
+      </aside>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-panel" hidden>
+  <div class="wrap">
+    <div class="pagehead">
+      <div><h1>Panel de huella de carbono</h1><p class="muted">Metalúrgica Sierras S.A., sector metalmecánico, categoría mediana tramo 1.</p></div>
+      <a class="btn primary" href="#paso1">Continuar medición 2025</a>
+    </div>
+    <div class="dash">
+      <div class="total">
+        <p class="row" style="gap:10px">Huella de carbono 2024 <span class="chip st st-ok onbrand"><i class="dot"></i>Emitida</span></p>
+        <div class="big"><span>196,3</span><span class="u">t CO₂e</span></div>
+        <p class="delta">▼ 12,4% menos que en 2023</p>
+        <p style="font-size:.88rem;opacity:.9">Emitida el 14/04/2025 con factores del ITEC v2025.2. Datos congelados.</p>
+        <div class="row" style="margin-top:10px"><a class="btn inv sm" href="#panel">Descargar reporte (PDF)</a><a class="btn inv sm" href="#panel">Descargar certificado</a></div>
+      </div>
+      <div class="panel">
+        <h2>Emisiones por alcance</h2>
+        <div class="donut-row"><div><svg viewBox="0 0 42 42" role="img" aria-label="Emisiones 2024 por alcance"><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--sunk)"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--a1)" stroke-dasharray="46.887 53.113" stroke-dashoffset="25.000"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--a2)" stroke-dasharray="45.241 54.759" stroke-dashoffset="-21.887"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--a3)" stroke-dasharray="7.871 92.129" stroke-dashoffset="-67.129"/><text x="21" y="21.6" text-anchor="middle" font-size="6.2" font-weight="800" style="fill:var(--ink);font-family:'Bricolage Grotesque',sans-serif">196,3</text><text x="21" y="26.6" text-anchor="middle" font-size="2.7" style="fill:var(--ink2)">t CO₂e</text></svg></div><ul class="legend"><li><i class="dot" style="--c:var(--a1)"></i><span><strong>Alcance 1</strong><span class="d">Emisiones directas</span></span><span class="v">92,0 t · 47%</span></li><li><i class="dot" style="--c:var(--a2)"></i><span><strong>Alcance 2</strong><span class="d">Energía comprada</span></span><span class="v">88,8 t · 45%</span></li><li><i class="dot" style="--c:var(--a3)"></i><span><strong>Alcance 3</strong><span class="d">Otras indirectas</span></span><span class="v">15,5 t · 8%</span></li></ul></div>
+      </div>
+      <div class="panel">
+        <h2>Energía convencional vs. renovable</h2>
+        <div class="donut-row"><div><svg viewBox="0 0 42 42" role="img" aria-label="Consumo eléctrico 2024: energía convencional y renovable"><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--sunk)"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--conv)" stroke-dasharray="92.500 7.500" stroke-dashoffset="25.000"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--ren)" stroke-dasharray="7.500 92.500" stroke-dashoffset="-67.500"/><text x="21" y="21.6" text-anchor="middle" font-size="6.2" font-weight="800" style="fill:var(--ink);font-family:'Bricolage Grotesque',sans-serif">7,5%</text><text x="21" y="26.6" text-anchor="middle" font-size="2.7" style="fill:var(--ink2)">renovable</text></svg></div>
+        <ul class="legend">
+          <li><i class="dot" style="--c:var(--conv)"></i><span><strong>Red (EPEC)</strong><span class="d">Energía convencional</span></span><span class="v">296.000 kWh</span></li>
+          <li><i class="dot" style="--c:var(--ren)"></i><span><strong>Renovable propia</strong><span class="d">Paneles solares</span></span><span class="v">24.000 kWh</span></li>
+        </ul></div>
+        <p class="callout">Tu energía renovable evitó <strong>7,2 t CO₂e</strong> en el Alcance 2.</p>
+      </div>
+      <div class="panel">
+        <h2>Comparación con el año anterior</h2>
+        <div class="sb"><span>2023</span><div class="sb-track"><div class="sb-bar" style="width:100.0%"><i style="flex:101.0;background:var(--a1)"></i><i style="flex:106.2;background:var(--a2)"></i><i style="flex:16.8;background:var(--a3)"></i></div></div><span class="v">224,0 t</span></div><div class="sb"><span>2024</span><div class="sb-track"><div class="sb-bar" style="width:87.6%"><i style="flex:92.03;background:var(--a1)"></i><i style="flex:88.8;background:var(--a2)"></i><i style="flex:15.45;background:var(--a3)"></i></div></div><span class="v">196,3 t</span></div>
+        <div class="row small" style="margin-top:10px"><span class="chip s1"><i class="dot"></i>Alcance 1</span><span class="chip s2"><i class="dot"></i>Alcance 2</span><span class="chip s3"><i class="dot"></i>Alcance 3</span></div>
+      </div>
+      <div class="panel wide"><h2>Detalle por fuente, 2024</h2>
+        <div class="tblwrap"><table class="tbl"><thead><tr><th>Fuente</th><th>Alcance</th><th class="num">Actividad</th><th class="num">Factor (kg CO₂e)</th><th class="num">t CO₂e</th><th class="num">Parte del total</th></tr></thead><tbody><tr><td>Electricidad de la red (EPEC)</td><td><span class="chip s2"><i class="dot"></i>Alcance 2</span></td><td class="num">296.000 kWh</td><td class="num">0,30</td><td class="num">88,8</td><td class="num">45%</td></tr><tr><td>Energía renovable autogenerada</td><td><span class="chip s2"><i class="dot"></i>Alcance 2</span></td><td class="num">24.000 kWh</td><td class="num">0,00</td><td class="num">0,0</td><td class="num">0%</td></tr><tr><td>Gasoil</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">18.000 L</td><td class="num">2,68</td><td class="num">48,2</td><td class="num">25%</td></tr><tr><td>Nafta</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">6.500 L</td><td class="num">2,26</td><td class="num">14,7</td><td class="num">7%</td></tr><tr><td>GNC</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">3.000 m³</td><td class="num">1,90</td><td class="num">5,7</td><td class="num">3%</td></tr><tr><td>Gas natural (calderas y hornos)</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">12.000 m³</td><td class="num">1,95</td><td class="num">23,4</td><td class="num">12%</td></tr><tr><td>Residuos a disposición final</td><td><span class="chip s3"><i class="dot"></i>Alcance 3</span></td><td class="num">26 t</td><td class="num">450,00</td><td class="num">11,7</td><td class="num">6%</td></tr><tr><td>Viajes de trabajo en avión</td><td><span class="chip s3"><i class="dot"></i>Alcance 3</span></td><td class="num">25.000 km</td><td class="num">0,15</td><td class="num">3,8</td><td class="num">2%</td></tr></tbody></table></div>
+      </div>
+      <div class="panel wide"><h2>Recomendaciones para reducir tu huella</h2>
+        <ul class="recs">
+          <li><i class="dot s2" style="margin-top:9px"></i><div><strong>Ampliá tu generación renovable</strong><span class="muted">La electricidad de la red representa el 45% de tu huella y tu generación solar cubre hoy el 7,5% del consumo. Sumá una auditoría energética y pasá a iluminación LED y motores de alta eficiencia.</span></div></li>
+          <li><i class="dot s1" style="margin-top:9px"></i><div><strong>Optimizá la flota y la maquinaria</strong><span class="muted">El gasoil representa el 25% de tu huella. Planificá rutas, mantené los motores al día y evaluá reemplazar unidades por opciones de menor emisión.</span></div></li>
+          <li><i class="dot s1" style="margin-top:9px"></i><div><strong>Aprovechá mejor el calor (economía circular)</strong><span class="muted">El gas natural representa el 12% de tu huella. Recuperá el calor residual de hornos y calderas y revisá la aislación y la combustión.</span></div></li>
+        </ul>
+      </div>
+      <div class="panel wide"><h2>Mediciones</h2>
+        <ul class="mlist">
+          <li><span class="p">2025</span><div><span class="chip st st-draft"><i class="dot"></i>Borrador</span> <span class="small">Guardada hoy. Falta enviarla al ITEC.</span></div><a class="btn ghost sm" href="#paso1">Continuar</a></li>
+          <li><span class="p">2024</span><div><span class="chip st st-ok"><i class="dot"></i>Emitida</span> <span class="small">Reporte y certificado emitidos</span></div><a class="btn ghost sm" href="#panel">Descargar</a></li>
+          <li><span class="p">2023</span><div><span class="chip st st-ok"><i class="dot"></i>Emitida</span> <span class="small">Reporte y certificado emitidos</span></div><a class="btn ghost sm" href="#panel">Descargar</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-paso1" hidden>
+  <div class="wrap">
+    <div class="pagehead"><h1>Nueva medición: año 2025</h1><p class="save">Guardado automáticamente a las 14:32</p></div>
+    <div class="steps"><a class="step" href="#paso1" aria-current="step"><b>Energía</b><span>Alcance 2</span></a><a class="step" href="#paso2"><b>Combustibles y flota</b><span>Alcance 1</span></a><a class="step" href="#paso3"><b>Residuos y viajes</b><span>Alcance 3, opcional</span></a><a class="step" href="#paso4"><b>Revisión y envío</b><span>Resultado</span></a></div>
+    <div class="wz">
+      <div>
+        <div class="wpanel">
+  <h2>Energía eléctrica</h2>
+  <p class="intro">Declará la electricidad que consume tu empresa, separada por origen. Cargá cada comprobante con su dato: la plataforma suma los totales por vos. <span class="chip s2"><i class="dot"></i>Alcance 2</span></p>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Electricidad de la red (EPEC)</span><button type="button" class="tip" aria-expanded="true" aria-controls="h-red" aria-label="Qué dato cargar">i</button><span class="req need">Obligatorio</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>285.000</b><span>kWh</span></div></div><div class="help" id="h-red">Ingresá el consumo total del período en kWh o utilizá la carga por plantilla. Como respaldo, adjuntá la última factura del año (donde figura el cuadro de Histórico de Consumos) o el reporte consolidado de autogestión de EPEC.</div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Resumen anual de EPEC</b><span class="d">historico-consumo-2025.pdf</span></span><span class="amt"><input value="285.000" aria-label="Electricidad de la red (EPEC): Resumen anual"><span class="u">kWh</span></span><span class="okmark">✓</span></div><div class="srow more"><span class="chip auto" style="margin-right:auto"><i class="dot"></i>Consumo anual detectado (Verificar y confirmar)</span></div></div><div class="src-f"><button type="button" class="btn primary sm">Confirmar y guardar</button><button type="button" class="btn ghost sm">+ Importar desglose mensual (.csv / .xlsx)</button><button type="button" class="btn ghost sm">Reemplazar PDF</button></div></div>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Energía renovable autogenerada</span><button type="button" class="tip" aria-expanded="false" aria-controls="h-ren" aria-label="Qué dato cargar">i</button><span class="req">Solo si generás energía</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>30.000</b><span>kWh</span></div></div><div class="src-rows"><div class="srow"><span class="ext sm">IMG</span><span class="src-n"><b>Reporte anual del inversor solar</b><span class="d">reporte-inversor-solar-2025.png</span></span><span class="amt"><input value="30.000" aria-label="Energía renovable autogenerada: Reporte anual del inversor solar"><span class="u">kWh</span></span><span class="okmark">✓</span></div></div><div class="src-f"><button type="button" class="btn ghost sm">+ Agregar reporte</button></div></div>
+  <div class="matrix">
+    <div class="lbl-t">Tu matriz eléctrica</div>
+    <div class="mbar big"><i style="flex:285000;background:var(--conv)"></i><i style="flex:30000;background:var(--ren)"></i></div>
+    <div class="row small" style="gap:18px"><span><i class="dot" style="--c:var(--conv)"></i> Red: 90,5%</span><span><i class="dot" style="--c:var(--ren)"></i> Renovable: 9,5%</span></div>
+  </div>
+  <div class="wfoot"><a class="btn primary" href="#paso2">Continuar</a></div>
+</div>
+      </div>
+      <aside class="meter" aria-label="Huella calculada hasta ahora">
+  <div class="lbl-t">Tu huella hasta ahora</div>
+  <div class="tot"><b>178,9</b><span>t CO₂e</span></div>
+  <div class="mbar"><i style="flex:86.65;background:var(--a1)"></i><i style="flex:79.80000000000001;background:var(--a2)"></i><i style="flex:12.405000000000001;background:var(--a3)"></i></div>
+  <div class="mrows">
+    <div><i class="dot" style="--c:var(--a1)"></i>Alcance 1<span class="v">86,7 t</span></div>
+    <div><i class="dot" style="--c:var(--a2)"></i>Alcance 2<span class="v">79,8 t</span></div>
+    <div><i class="dot" style="--c:var(--a3)"></i>Alcance 3<span class="v">12,4 t</span></div>
+  </div>
+  <p class="fine">Se recalcula mientras cargás, con los factores del ITEC v2026.1. Valores de ejemplo.</p>
+</aside>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-paso2" hidden>
+  <div class="wrap">
+    <div class="pagehead"><h1>Nueva medición: año 2025</h1><p class="save">Guardado automáticamente a las 14:32</p></div>
+    <div class="steps"><a class="step done" href="#paso1"><b>Energía</b><span>Alcance 2</span></a><a class="step" href="#paso2" aria-current="step"><b>Combustibles y flota</b><span>Alcance 1</span></a><a class="step" href="#paso3"><b>Residuos y viajes</b><span>Alcance 3, opcional</span></a><a class="step" href="#paso4"><b>Revisión y envío</b><span>Resultado</span></a></div>
+    <div class="wz">
+      <div>
+        <div class="wpanel">
+  <h2>Combustibles y flota</h2>
+  <p class="intro">Combustibles que quema tu empresa en vehículos propios, calderas y hornos. Si alguno no aplica, cargá 0. <span class="chip s1"><i class="dot"></i>Alcance 1</span></p>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Gasoil consumido</span><span class="req need">Obligatorio</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>17.000</b><span>litros</span></div></div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Resumen anual de tarjeta de flota</b><span class="d">resumen-tarjeta-flota-2025.pdf</span></span><span class="amt"><input value="17.000" aria-label="Gasoil consumido: Resumen anual de tarjeta de flota"><span class="u">litros</span></span><span class="okmark">✓</span></div></div><div class="src-f"><button type="button" class="btn ghost sm">+ Agregar comprobante</button></div></div>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Nafta consumida</span><span class="req need">Obligatorio</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>6.000</b><span>litros</span></div></div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Resumen anual de tarjeta de flota</b><span class="d">resumen-tarjeta-flota-2025.pdf</span></span><span class="amt"><input value="6.000" aria-label="Nafta consumida: Resumen anual de tarjeta de flota"><span class="u">litros</span></span><span class="okmark">✓</span></div></div><div class="src-f"><button type="button" class="btn ghost sm">+ Agregar comprobante</button></div></div>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">GNC consumido</span><span class="req need">Obligatorio</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>3.200</b><span>m³</span></div></div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Tickets de carga de GNC</b><span class="d">tickets-gnc-2025.pdf</span></span><span class="amt"><input value="3.200" aria-label="GNC consumido: Tickets de carga de GNC"><span class="u">m³</span></span><span class="okmark">✓</span></div></div><div class="src-f"><button type="button" class="btn ghost sm">+ Agregar comprobante</button></div></div>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Gas natural en calderas y hornos</span><span class="req need">Obligatorio</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>11.000</b><span>m³</span></div></div><div class="help" id="h-gas">Ingresá el consumo total del período en m³ o utilizá la carga por plantilla. Como respaldo, adjuntá el resumen anual de tu distribuidora de gas (ej. Ecogas) o el reporte consolidado de consumos.</div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Resumen anual de gas natural</b><span class="d">historico-gas-2025.pdf</span></span><span class="amt"><input value="11.000" aria-label="Gas natural: Resumen anual"><span class="u">m³</span></span><span class="okmark">✓</span></div><div class="srow more"><span class="chip auto" style="margin-right:auto"><i class="dot"></i>Consumo anual detectado (Verificar y confirmar)</span></div></div><div class="src-f"><button type="button" class="btn primary sm">Confirmar y guardar</button><button type="button" class="btn ghost sm">+ Importar desglose mensual (.csv / .xlsx)</button><button type="button" class="btn ghost sm">Reemplazar PDF</button></div></div>
+  <div class="wfoot"><a class="btn ghost" href="#paso1">Volver</a><a class="btn primary" href="#paso3">Continuar</a></div>
+</div>
+      </div>
+      <aside class="meter" aria-label="Huella calculada hasta ahora">
+  <div class="lbl-t">Tu huella hasta ahora</div>
+  <div class="tot"><b>178,9</b><span>t CO₂e</span></div>
+  <div class="mbar"><i style="flex:86.65;background:var(--a1)"></i><i style="flex:79.80000000000001;background:var(--a2)"></i><i style="flex:12.405000000000001;background:var(--a3)"></i></div>
+  <div class="mrows">
+    <div><i class="dot" style="--c:var(--a1)"></i>Alcance 1<span class="v">86,7 t</span></div>
+    <div><i class="dot" style="--c:var(--a2)"></i>Alcance 2<span class="v">79,8 t</span></div>
+    <div><i class="dot" style="--c:var(--a3)"></i>Alcance 3<span class="v">12,4 t</span></div>
+  </div>
+  <p class="fine">Se recalcula mientras cargás, con los factores del ITEC v2026.1. Valores de ejemplo.</p>
+</aside>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-paso3" hidden>
+  <div class="wrap">
+    <div class="pagehead"><h1>Nueva medición: año 2025</h1><p class="save">Guardado automáticamente a las 14:32</p></div>
+    <div class="steps"><a class="step done" href="#paso1"><b>Energía</b><span>Alcance 2</span></a><a class="step done" href="#paso2"><b>Combustibles y flota</b><span>Alcance 1</span></a><a class="step" href="#paso3" aria-current="step"><b>Residuos y viajes</b><span>Alcance 3, opcional</span></a><a class="step" href="#paso4"><b>Revisión y envío</b><span>Resultado</span></a></div>
+    <div class="wz">
+      <div>
+        <div class="wpanel">
+  <h2>Residuos y viajes</h2>
+  <p class="intro">Estas emisiones ocurren fuera de tu empresa. Si todavía no tenés los datos, podés omitir este paso y completarlo después. <span class="chip s3"><i class="dot"></i>Alcance 3</span></p>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Residuos generados</span><span class="req">Opcional</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>38</b><span>toneladas</span></div></div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Manifiestos de residuos</b><span class="d">manifiestos-residuos-2025.pdf</span></span><span class="amt"><input value="38" aria-label="Residuos generados: Manifiestos de residuos"><span class="u">toneladas</span></span><span class="okmark">✓</span></div></div><div class="src-f"><button type="button" class="btn ghost sm">+ Agregar comprobante</button></div></div>
+  <div class="field"><div class="lbl"><label for="f-rec">Porcentaje reciclado o recuperado</label><span class="req">Opcional</span></div><div class="control"><input id="f-rec" value="45"><span class="unit">%</span></div></div>
+  <div class="src"><div class="src-h"><div class="src-t"><span class="src-title">Viajes de trabajo en avión</span><span class="req">Opcional</span></div><div class="src-total"><span class="chip auto"><i class="dot"></i>Suma automática</span><b>20.000</b><span>km</span></div></div><div class="src-rows"><div class="srow"><span class="ext sm">PDF</span><span class="src-n"><b>Resumen de la agencia de viajes</b><span class="d">resumen-agencia-viajes-2025.pdf</span></span><span class="amt"><input value="20.000" aria-label="Viajes de trabajo en avión: Resumen de la agencia de viajes"><span class="u">km</span></span><span class="okmark">✓</span></div></div><div class="src-f"><button type="button" class="btn ghost sm">+ Agregar comprobante</button></div></div>
+  <div class="wfoot"><a class="btn ghost" href="#paso2">Volver</a><a class="btn primary" href="#paso4">Continuar</a><a class="btn ghost" href="#paso4">Omitir por ahora</a></div>
+</div>
+      </div>
+      <aside class="meter" aria-label="Huella calculada hasta ahora">
+  <div class="lbl-t">Tu huella hasta ahora</div>
+  <div class="tot"><b>178,9</b><span>t CO₂e</span></div>
+  <div class="mbar"><i style="flex:86.65;background:var(--a1)"></i><i style="flex:79.80000000000001;background:var(--a2)"></i><i style="flex:12.405000000000001;background:var(--a3)"></i></div>
+  <div class="mrows">
+    <div><i class="dot" style="--c:var(--a1)"></i>Alcance 1<span class="v">86,7 t</span></div>
+    <div><i class="dot" style="--c:var(--a2)"></i>Alcance 2<span class="v">79,8 t</span></div>
+    <div><i class="dot" style="--c:var(--a3)"></i>Alcance 3<span class="v">12,4 t</span></div>
+  </div>
+  <p class="fine">Se recalcula mientras cargás, con los factores del ITEC v2026.1. Valores de ejemplo.</p>
+</aside>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-paso4" hidden>
+  <div class="wrap">
+    <div class="pagehead"><h1>Nueva medición: año 2025</h1><p class="save">Guardado automáticamente a las 14:32</p></div>
+    <div class="steps"><a class="step done" href="#paso1"><b>Energía</b><span>Alcance 2</span></a><a class="step done" href="#paso2"><b>Combustibles y flota</b><span>Alcance 1</span></a><a class="step done" href="#paso3"><b>Residuos y viajes</b><span>Alcance 3, opcional</span></a><a class="step" href="#paso4" aria-current="step"><b>Revisión y envío</b><span>Resultado</span></a></div>
+    <div class="wz">
+      <div>
+        <div class="wpanel">
+  <h2>Revisá y enviá</h2>
+  <p class="intro">Controlá lo que cargaste. Podés volver a cualquier paso para corregirlo.</p>
+  <div class="tblwrap"><table class="tbl"><thead><tr><th>Fuente</th><th>Alcance</th><th class="num">Actividad</th><th>Comprobante</th><th class="num">t CO₂e</th></tr></thead><tbody><tr><td>Electricidad de la red (EPEC)</td><td><span class="chip s2"><i class="dot"></i>Alcance 2</span></td><td class="num">285.000 kWh</td><td><span class="okmark">✓ 1 comprobante histórico</span></td><td class="num">79,8</td></tr><tr><td>Energía renovable autogenerada</td><td><span class="chip s2"><i class="dot"></i>Alcance 2</span></td><td class="num">30.000 kWh</td><td><span class="okmark">✓ 1 comprobante</span></td><td class="num">0,0</td></tr><tr><td>Gasoil</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">17.000 L</td><td><span class="okmark">✓ 1 comprobante</span></td><td class="num">45,6</td></tr><tr><td>Nafta</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">6.000 L</td><td><span class="okmark">✓ 1 comprobante</span></td><td class="num">13,6</td></tr><tr><td>GNC</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">3.200 m³</td><td><span class="okmark">✓ 1 comprobante</span></td><td class="num">6,1</td></tr><tr><td>Gas natural (calderas y hornos)</td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num">11.000 m³</td><td><span class="okmark">✓ 1 comprobante histórico</span></td><td class="num">21,5</td></tr><tr><td>Residuos a disposición final</td><td><span class="chip s3"><i class="dot"></i>Alcance 3</span></td><td class="num">21 t</td><td><span class="okmark">✓ 1 comprobante</span></td><td class="num">9,4</td></tr><tr><td>Viajes de trabajo en avión</td><td><span class="chip s3"><i class="dot"></i>Alcance 3</span></td><td class="num">20.000 km</td><td><span class="okmark">✓ 1 comprobante</span></td><td class="num">3,0</td></tr></tbody>
+  <tfoot><tr><td colspan="4">Total calculado</td><td class="num">178,9</td></tr></tfoot></table></div>
+  <div class="banner"><strong>Qué pasa al enviar.</strong> Tu reporte queda en estado <span class="chip st st-pend"><i class="dot"></i>Pendiente de validación</span> hasta que el ITEC revise tu respaldo. Cuando lo apruebe, se congelan los datos y se emiten el reporte final y el certificado oficial.</div>
+  <div class="wfoot"><a class="btn ghost" href="#paso3">Volver</a><a class="btn ghost" href="#paso4">Guardar borrador</a><a class="btn primary" href="#bandeja">Enviar a validación del ITEC</a></div>
+</div>
+      </div>
+      <aside class="meter" aria-label="Huella calculada hasta ahora">
+  <div class="lbl-t">Tu huella hasta ahora</div>
+  <div class="tot"><b>178,9</b><span>t CO₂e</span></div>
+  <div class="mbar"><i style="flex:86.65;background:var(--a1)"></i><i style="flex:79.80000000000001;background:var(--a2)"></i><i style="flex:12.405000000000001;background:var(--a3)"></i></div>
+  <div class="mrows">
+    <div><i class="dot" style="--c:var(--a1)"></i>Alcance 1<span class="v">86,7 t</span></div>
+    <div><i class="dot" style="--c:var(--a2)"></i>Alcance 2<span class="v">79,8 t</span></div>
+    <div><i class="dot" style="--c:var(--a3)"></i>Alcance 3<span class="v">12,4 t</span></div>
+  </div>
+  <p class="fine">Se recalcula mientras cargás, con los factores del ITEC v2026.1. Valores de ejemplo.</p>
+</aside>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-bandeja" hidden>
+  <div class="wrap">
+    <div class="pagehead"><div><h1>Bandeja de empresas</h1><p class="muted">Declaraciones de las empresas y estado de su trámite de validación.</p></div><a class="btn ghost" href="#bandeja">Registrar empresa</a></div>
+    <div class="tabs" role="tablist">
+      <a class="tab" aria-current="true" href="#bandeja">Todas <b>163</b></a>
+      <a class="tab" href="#bandeja">Borrador <b>24</b></a>
+      <a class="tab" href="#bandeja">Pendientes de validación <b>15</b></a>
+      <a class="tab" href="#bandeja">Observadas <b>6</b></a>
+      <a class="tab" href="#bandeja">Emitidas <b>118</b></a>
+    </div>
+    <div class="panel" style="padding:18px">
+      <div class="filters">
+        <div class="field"><div class="lbl"><label for="q">Buscar</label></div><div class="control"><input id="q" placeholder="Empresa o CUIT"></div></div>
+        <div class="field"><div class="lbl"><label for="fs">Sector</label></div><div class="control"><select id="fs"><option>Todos</option><option>Alimentos y bebidas</option><option>Metalmecánica</option><option>Automotriz y autopartes</option><option>Construcción</option></select></div></div>
+        <div class="field"><div class="lbl"><label for="fp">Período</label></div><div class="control"><select id="fp"><option>2025</option><option>2024</option><option>2023</option></select></div></div>
+        <div class="field"><div class="lbl"><label for="fe">Estado de revisión</label></div><div class="control"><select id="fe"><option>Todos</option><option>Borrador</option><option>Pendiente de validación</option><option>Observada</option><option>Emitida</option></select></div></div>
+      </div>
+      <div class="tblwrap"><table class="tbl tbl-band"><thead><tr><th>Empresa</th><th>Sector y categoría</th><th>Período</th><th class="num">Declarado (t CO₂e)</th><th>Estado</th><th>Alertas</th><th></th></tr></thead>
+      <tbody><tr><td><strong>Metalúrgica Sierras S.A.</strong><span class="d cuit">CUIT 30-71234567-8</span></td><td>Metalmecánica<span class="d">Mediana</span></td><td>2025</td><td class="num">178,9</td><td><span class="chip st st-pend"><i class="dot"></i>Pendiente de validación</span></td><td><span class="small">Sin alertas</span></td><td class="num"><a class="btn primary sm" href="#auditoria">Revisar</a></td></tr><tr class="flagrow"><td><strong>Panificadora del Centro</strong><span class="d cuit">CUIT 30-70987654-3</span></td><td>Alimentos y bebidas<span class="d">Pequeña</span></td><td>2025</td><td class="num">1.240,0</td><td><span class="chip st st-pend"><i class="dot"></i>Pendiente de validación</span></td><td><span class="chip alert"><i class="dot"></i>Desvío alto</span><span class="d">8× el de su segmento</span></td><td class="num"><a class="btn primary sm" href="#auditoria">Revisar</a></td></tr><tr><td><strong>Autopartes Río Ceballos</strong><span class="d cuit">CUIT 30-70456123-9</span></td><td>Automotriz y autopartes<span class="d">Grande</span></td><td>2025</td><td class="num">2.315,4</td><td><span class="chip st st-pend"><i class="dot"></i>Pendiente de validación</span></td><td><span class="small">Sin alertas</span></td><td class="num"><a class="btn primary sm" href="#auditoria">Revisar</a></td></tr><tr><td><strong>Plásticos Sierras Chicas</strong><span class="d cuit">CUIT 30-71555888-2</span></td><td>Otros<span class="d">Pequeña</span></td><td>2025</td><td class="num">96,2</td><td><span class="chip st st-pend"><i class="dot"></i>Pendiente de validación</span></td><td><span class="small">Sin alertas</span></td><td class="num"><a class="btn primary sm" href="#auditoria">Revisar</a></td></tr><tr><td><strong>Lácteos Traslasierra</strong><span class="d cuit">CUIT 30-70222111-5</span></td><td>Alimentos y bebidas<span class="d">Mediana</span></td><td>2025</td><td class="num">412,7</td><td><span class="chip st st-obs"><i class="dot"></i>Observada</span></td><td><span class="small">Devuelta el 15/09</span></td><td class="num"><a class="btn ghost sm" href="#auditoria">Ver</a></td></tr><tr><td><strong>Constructora Nueva Córdoba</strong><span class="d cuit">CUIT 30-70666333-1</span></td><td>Construcción<span class="d">Mediana</span></td><td>2025</td><td class="num">268,3</td><td><span class="chip st st-draft"><i class="dot"></i>Borrador</span></td><td><span class="small">Sin alertas</span></td><td class="num"><a class="btn ghost sm" href="#auditoria">Ver</a></td></tr><tr><td><strong>Distribuidora Barrio Jardín</strong><span class="d cuit">CUIT 30-71888444-7</span></td><td>Comercio<span class="d">Micro</span></td><td>2024</td><td class="num">14,6</td><td><span class="chip st st-ok"><i class="dot"></i>Emitida</span></td><td><span class="small">Sin alertas</span></td><td class="num"><a class="btn ghost sm" href="#auditoria">Ver</a></td></tr><tr><td><strong>Software Docta SRL</strong><span class="d cuit">CUIT 30-71333999-0</span></td><td>Servicios y software<span class="d">Pequeña</span></td><td>2024</td><td class="num">9,8</td><td><span class="chip st st-ok"><i class="dot"></i>Emitida</span></td><td><span class="small">Sin alertas</span></td><td class="num"><a class="btn ghost sm" href="#auditoria">Ver</a></td></tr></tbody></table></div>
+      <p class="small" style="margin-top:12px">Mostrando 8 de 163 empresas.</p>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-auditoria" hidden>
+  <div class="wrap">
+    <p class="crumb"><a href="#bandeja">Bandeja de empresas</a> / Metalúrgica Sierras S.A.</p>
+    <div class="pagehead">
+      <div><h1>Metalúrgica Sierras S.A.</h1>
+        <p class="muted">CUIT 30-71234567-8 · Metalmecánica · Mediana tramo 1 · Medición 2025, enviada el 18/09/2026</p></div>
+      <div><span class="chip st st-pend"><i class="dot"></i>Pendiente de validación</span></div>
+    </div>
+    <div class="kpis k3">
+      <div class="panel kpi"><span class="muted">Total declarado</span><b>178,9</b><span class="small">t CO₂e</span></div>
+      <div class="panel kpi"><span class="muted">Variación vs. 2024</span><b>▼ 8,9%</b><span class="small">2024 emitida: 196,3 t CO₂e</span></div>
+      <div class="panel kpi"><span class="muted">Comprobantes revisados</span><b>3 de 8</b><span class="small">Faltan 5 por revisar</span></div>
+    </div>
+    <div class="audit">
+      <div class="panel">
+        <h2>Consumos declarados y comprobantes</h2>
+        <div class="tblwrap"><table class="tbl tbl-audit"><thead><tr><th>Fuente</th><th>Alcance</th><th class="num">Declarado</th><th>Comprobante</th><th>Verificación</th><th class="num">t CO₂e</th></tr></thead><tbody><tr class="sel"><td>Electricidad de la red (EPEC)</td><td><span class="chip s2"><i class="dot"></i>2</span></td><td class="num">285.000 kWh<span class="d">resumen anual</span></td><td><span class="ext sm">PDF</span> <span class="lnk">Ver histórico</span></td><td><span class="chip st st-pend"><i class="dot"></i>Pendiente</span></td><td class="num">79,8</td></tr><tr><td>Energía renovable autogenerada</td><td><span class="chip s2"><i class="dot"></i>2</span></td><td class="num">30.000 kWh</td><td><span class="ext sm">IMG</span> <span class="lnk">Ver</span></td><td><span class="chip st st-ok"><i class="dot"></i>Coincide</span></td><td class="num">0,0</td></tr><tr><td>Gasoil</td><td><span class="chip s1"><i class="dot"></i>1</span></td><td class="num">17.000 L</td><td><span class="ext sm">PDF</span> <span class="lnk">Ver</span></td><td><span class="chip st st-ok"><i class="dot"></i>Coincide</span></td><td class="num">45,6</td></tr><tr><td>Nafta</td><td><span class="chip s1"><i class="dot"></i>1</span></td><td class="num">6.000 L</td><td><span class="ext sm">PDF</span> <span class="lnk">Ver</span></td><td><span class="chip st st-draft"><i class="dot"></i>Sin revisar</span></td><td class="num">13,6</td></tr><tr><td>GNC</td><td><span class="chip s1"><i class="dot"></i>1</span></td><td class="num">3.200 m³</td><td><span class="ext sm">PDF</span> <span class="lnk">Ver</span></td><td><span class="chip st st-draft"><i class="dot"></i>Sin revisar</span></td><td class="num">6,1</td></tr><tr><td>Gas natural (calderas y hornos)</td><td><span class="chip s1"><i class="dot"></i>1</span></td><td class="num">11.000 m³<span class="d">resumen anual</span></td><td><span class="ext sm">PDF</span> <span class="lnk">Ver histórico</span></td><td><span class="chip st st-draft"><i class="dot"></i>Sin revisar</span></td><td class="num">21,5</td></tr><tr><td>Residuos a disposición final</td><td><span class="chip s3"><i class="dot"></i>3</span></td><td class="num">38 t generadas</td><td><span class="ext sm">PDF</span> <span class="lnk">Ver</span></td><td><span class="chip st st-draft"><i class="dot"></i>Sin revisar</span></td><td class="num">9,4</td></tr><tr><td>Viajes de trabajo en avión</td><td><span class="chip s3"><i class="dot"></i>3</span></td><td class="num">20.000 km</td><td><span class="ext sm">PDF</span> <span class="lnk">Ver</span></td><td><span class="chip st st-draft"><i class="dot"></i>Sin revisar</span></td><td class="num">3,0</td></tr></tbody>
+        <tfoot><tr><td colspan="5">Total</td><td class="num">178,9</td></tr></tfoot></table></div>
+      </div>
+      <div class="panel prev">
+        <h2>Comprobante</h2><p class="small" style="margin:-8px 0 14px">factura-epec-2025-03.pdf</p>
+        <div class="paper" aria-label="Vista previa del comprobante">
+          <div class="paper-h"><strong>Factura de energía eléctrica</strong><span>Marzo 2025</span></div>
+          <div class="ln w60"></div><div class="ln w40"></div>
+          <div class="paper-row"><span>Cliente</span><span>Metalúrgica Sierras S.A.</span></div>
+          <div class="ln w80"></div>
+          <div class="paper-hl">Consumo del período <b>23.500 kWh</b></div>
+          <div class="ln w70"></div><div class="ln w50"></div><div class="ln w60"></div>
+        </div>
+        <div class="cmp"><div><span class="muted">Declarado</span><b>23.500 kWh</b></div><div><span class="muted">En el comprobante</span><b>23.500 kWh</b></div><div class="okc">✓ Coincide</div></div>
+        <div class="pager"><button type="button" class="btn ghost sm">‹ Anterior</button><span class="small">Factura 3 de 12</span><button type="button" class="btn ghost sm">Siguiente ›</button></div>
+      </div>
+    </div>
+    <div class="dash" style="margin-top:20px">
+      <div class="panel">
+        <h2>Matriz eléctrica</h2>
+        <div class="donut-row"><div><svg viewBox="0 0 42 42" role="img" aria-label="Matriz eléctrica 2025"><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--sunk)"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--conv)" stroke-dasharray="90.476 9.524" stroke-dashoffset="25.000"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--ren)" stroke-dasharray="9.524 90.476" stroke-dashoffset="-65.476"/><text x="21" y="21.6" text-anchor="middle" font-size="6.2" font-weight="800" style="fill:var(--ink);font-family:'Bricolage Grotesque',sans-serif">9,5%</text><text x="21" y="26.6" text-anchor="middle" font-size="2.7" style="fill:var(--ink2)">renovable</text></svg></div>
+        <ul class="legend">
+          <li><i class="dot" style="--c:var(--conv)"></i><span><strong>Red (EPEC)</strong><span class="d">Factor 0,28 kg CO₂e/kWh</span></span><span class="v">285.000 kWh</span></li>
+          <li><i class="dot" style="--c:var(--ren)"></i><span><strong>Renovable propia</strong><span class="d">Factor 0,00 kg CO₂e/kWh</span></span><span class="v">30.000 kWh</span></li>
+        </ul></div>
+      </div>
+      <div class="panel">
+        <h2>Principales fuentes de emisión</h2>
+        <div class="hb"><span class="l">Electricidad de la red (EPEC)</span><div class="tr"><i style="width:100%"></i></div><span class="v">79,8 t · 45%</span></div><div class="hb"><span class="l">Gasoil</span><div class="tr"><i style="width:57%"></i></div><span class="v">45,6 t · 25%</span></div><div class="hb"><span class="l">Gas natural (calderas y hornos)</span><div class="tr"><i style="width:27%"></i></div><span class="v">21,5 t · 12%</span></div><div class="hb"><span class="l">Nafta</span><div class="tr"><i style="width:17%"></i></div><span class="v">13,6 t · 8%</span></div><div class="hb"><span class="l">Residuos a disposición final</span><div class="tr"><i style="width:12%"></i></div><span class="v">9,4 t · 5%</span></div>
+      </div>
+      <div class="panel">
+        <h2>Control y alertas</h2>
+        <ul class="checks">
+          <li class="ok">Total dentro del rango de empresas medianas del sector metalmecánico.</li>
+          <li class="ok">Variación de −8,9% respecto de la medición 2024.</li>
+          <li class="ok">Todos los datos obligatorios tienen comprobante adjunto.</li>
+          <li class="warn">Quedan 5 comprobantes por revisar antes de aprobar.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>Notas de seguimiento</h2>
+        <div class="control"><textarea rows="4">Principal fuente: electricidad de la red. Proponer auditoría energética y ampliar la generación solar. Consultar por recuperación de calor en hornos.</textarea></div>
+        <p class="small" style="margin-top:8px">Visibles solo para el ITEC. Sirven para asesorar a la empresa.</p>
+      </div>
+    </div>
+    <div class="actionbar">
+      <p class="small">Al aprobar, los datos se congelan y se emiten el reporte final y el certificado oficial.</p>
+      <div class="row"><a class="btn ghost" href="#bandeja">Devolver con observaciones</a><a class="btn primary" href="#bandeja">Aprobar y emitir</a></div>
+    </div>
+  </div>
+</section>
+<section class="screen" id="s-factores" hidden>
+  <div class="wrap">
+    <div class="pagehead"><div><h1>Factores de emisión</h1><p class="muted">Versión vigente: <strong>v2026.1</strong>. Las mediciones nuevas usan esta versión; las emitidas conservan la suya.</p></div>
+      <div class="row"><span class="small">Sin cambios pendientes</span><a class="btn primary" href="#factores">Publicar nueva versión</a></div></div>
+    <div class="panel" style="margin-bottom:20px"><div class="tblwrap"><table class="tbl"><thead><tr><th>Factor</th><th>Alcance</th><th class="num">Valor</th><th>Unidad</th><th>Fuente propuesta</th></tr></thead><tbody><tr><td><strong>Electricidad de la red (SADI)</strong></td><td><span class="chip s2"><i class="dot"></i>Alcance 2</span></td><td class="num"><input class="fv" value="0,28" aria-label="Valor de Electricidad de la red (SADI)"></td><td style="white-space:nowrap">kg CO₂e/kWh</td><td>Secretaría de Energía de la Nación</td></tr><tr class=hl><td><strong>Energía renovable (autogenerada o contratada)</strong><span class="d">Configurable: 0,00 con el criterio de mercado tradicional, o un coeficiente de ciclo de vida (por ejemplo, 0,04).</span></td><td><span class="chip s2"><i class="dot"></i>Alcance 2</span></td><td class="num"><input class="fv" value="0,00" aria-label="Valor de Energía renovable (autogenerada o contratada)"></td><td style="white-space:nowrap">kg CO₂e/kWh</td><td>Criterio definido por el ITEC</td></tr><tr><td><strong>Gasoil</strong></td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num"><input class="fv" value="2,68" aria-label="Valor de Gasoil"></td><td style="white-space:nowrap">kg CO₂e/L</td><td>DEFRA / EPA</td></tr><tr><td><strong>Nafta</strong></td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num"><input class="fv" value="2,26" aria-label="Valor de Nafta"></td><td style="white-space:nowrap">kg CO₂e/L</td><td>DEFRA / EPA</td></tr><tr><td><strong>GNC</strong></td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num"><input class="fv" value="1,90" aria-label="Valor de GNC"></td><td style="white-space:nowrap">kg CO₂e/m³</td><td>DEFRA / EPA</td></tr><tr><td><strong>Gas natural</strong></td><td><span class="chip s1"><i class="dot"></i>Alcance 1</span></td><td class="num"><input class="fv" value="1,95" aria-label="Valor de Gas natural"></td><td style="white-space:nowrap">kg CO₂e/m³</td><td>DEFRA / EPA</td></tr><tr><td><strong>Residuos a disposición final</strong></td><td><span class="chip s3"><i class="dot"></i>Alcance 3</span></td><td class="num"><input class="fv" value="450,00" aria-label="Valor de Residuos a disposición final"></td><td style="white-space:nowrap">kg CO₂e/t</td><td>DEFRA</td></tr><tr><td><strong>Vuelos comerciales</strong></td><td><span class="chip s3"><i class="dot"></i>Alcance 3</span></td><td class="num"><input class="fv" value="0,15" aria-label="Valor de Vuelos comerciales"></td><td style="white-space:nowrap">kg CO₂e/km</td><td>DEFRA</td></tr></tbody></table></div></div>
+    <div class="panel"><h2>Historial de cambios</h2>
+      <ul class="log">
+        <li><strong>v2026.1</strong> <span class="muted">Ene 2026</span><br>Factor eléctrico actualizado de 0,30 a 0,28 kg CO₂e/kWh (Secretaría de Energía). Alta del factor de energía renovable en 0,00.</li>
+        <li><strong>v2025.2</strong> <span class="muted">Ene 2025</span><br>Alta del factor de vuelos comerciales.</li>
+      </ul></div>
+  </div>
+</section>
+<section class="screen" id="s-observatorio" hidden>
+  <div class="wrap">
+    <div class="pagehead"><div><h1>Observatorio de emisiones de Córdoba</h1><p class="muted">Vista macro con las mediciones emitidas de todas las empresas. Datos ilustrativos, año 2024.</p></div>
+      <a class="btn ghost" href="#observatorio">Exportar vista anonimizada</a></div>
+    <div class="kpis k4">
+      <div class="panel kpi"><span class="muted">Emisiones reportadas</span><b>48.210</b><span class="small">t CO₂e</span></div>
+      <div class="panel kpi"><span class="muted">Empresas con medición emitida</span><b>118</b><span class="small">&nbsp;</span></div>
+      <div class="panel kpi"><span class="muted">Promedio por empresa</span><b>409</b><span class="small">t CO₂e</span></div>
+      <div class="panel kpi"><span class="muted">Energía renovable declarada</span><b>6,8%</b><span class="small">31 de 118 empresas declaran renovable</span></div>
+    </div>
+    <div class="dash">
+      <div class="panel"><h2>Emisiones por sector</h2><div class="hb"><span class="l">Alimentos y bebidas</span><div class="tr"><i style="width:100%"></i></div><span class="v">12.400 t · 26%</span></div><div class="hb"><span class="l">Metalmecánica</span><div class="tr"><i style="width:89%"></i></div><span class="v">11.050 t · 23%</span></div><div class="hb"><span class="l">Automotriz y autopartes</span><div class="tr"><i style="width:75%"></i></div><span class="v">9.300 t · 19%</span></div><div class="hb"><span class="l">Construcción</span><div class="tr"><i style="width:50%"></i></div><span class="v">6.150 t · 13%</span></div><div class="hb"><span class="l">Otros</span><div class="tr"><i style="width:29%"></i></div><span class="v">3.580 t · 7%</span></div><div class="hb"><span class="l">Servicios y software</span><div class="tr"><i style="width:24%"></i></div><span class="v">3.010 t · 6%</span></div><div class="hb"><span class="l">Comercio</span><div class="tr"><i style="width:22%"></i></div><span class="v">2.720 t · 6%</span></div></div>
+      <div class="panel"><h2>Emisiones por categoría de empresa</h2><div class="hb"><span class="l">Grande</span><div class="tr"><i style="width:100%"></i></div><span class="v">20.700 t · 43%</span></div><div class="hb"><span class="l">Mediana</span><div class="tr"><i style="width:86%"></i></div><span class="v">17.890 t · 37%</span></div><div class="hb"><span class="l">Pequeña</span><div class="tr"><i style="width:37%"></i></div><span class="v">7.680 t · 16%</span></div><div class="hb"><span class="l">Micro</span><div class="tr"><i style="width:9%"></i></div><span class="v">1.940 t · 4%</span></div><p class="small" style="margin-top:10px">Categorías según Certificado MiPyME. Las medianas agrupan los tramos 1 y 2.</p></div>
+      <div class="panel"><h2>Emisiones por alcance</h2>
+        <div class="sb-track"><div class="sb-bar"><i style="flex:21400;background:var(--a1)"></i><i style="flex:22300;background:var(--a2)"></i><i style="flex:4510;background:var(--a3)"></i></div></div>
+        <ul class="legend" style="margin-top:14px">
+          <li><i class="dot" style="--c:var(--a1)"></i><span><strong>Alcance 1</strong> <span class="muted">Directas</span></span><span class="v">21.400 t · 44%</span></li>
+          <li><i class="dot" style="--c:var(--a2)"></i><span><strong>Alcance 2</strong> <span class="muted">Energía comprada</span></span><span class="v">22.300 t · 46%</span></li>
+          <li><i class="dot" style="--c:var(--a3)"></i><span><strong>Alcance 3</strong> <span class="muted">Otras indirectas</span></span><span class="v">4.510 t · 9%</span></li>
+        </ul></div>
+      <div class="panel"><h2>Transición energética</h2>
+        <div class="donut-row"><div><svg viewBox="0 0 42 42" role="img" aria-label="Consumo eléctrico declarado: convencional y renovable"><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--sunk)"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--conv)" stroke-dasharray="93.200 6.800" stroke-dashoffset="25.000"/><circle cx="21" cy="21" r="15.9155" fill="none" stroke-width="6" style="stroke:var(--ren)" stroke-dasharray="6.800 93.200" stroke-dashoffset="-68.200"/><text x="21" y="21.6" text-anchor="middle" font-size="6.2" font-weight="800" style="fill:var(--ink);font-family:'Bricolage Grotesque',sans-serif">6,8%</text><text x="21" y="26.6" text-anchor="middle" font-size="2.7" style="fill:var(--ink2)">renovable</text></svg></div>
+        <ul class="legend"><li><i class="dot" style="--c:var(--conv)"></i><span><strong>Red</strong><span class="d">Energía convencional</span></span><span class="v">93,2%</span></li>
+        <li><i class="dot" style="--c:var(--ren)"></i><span><strong>Renovable</strong><span class="d">Propia o contratada</span></span><span class="v">6,8%</span></li></ul></div>
+      </div>
+      <div class="panel wide note"><strong>Confidencialidad.</strong> Esta es la vista interna del ITEC y solo incluye mediciones emitidas. Para publicar hacia el exterior, los datos se muestran agregados y anonimizados: sin identificar empresas y agrupando los segmentos con pocas empresas.</div>
+    </div>
+  </div>
+</section>
+</main>
+<script>
+(function(){
+  var CTX={inicio:'public',registro:'public',panel:'empresa',paso1:'empresa',paso2:'empresa',paso3:'empresa',paso4:'empresa',bandeja:'itec',auditoria:'itec',factores:'itec',observatorio:'itec'};
+  var btn=document.getElementById('menu-btn'), menu=document.getElementById('menu');
+  function setMenu(open){menu.hidden=!open;btn.setAttribute('aria-expanded',open?'true':'false');}
+  btn.addEventListener('click',function(e){e.stopPropagation();setMenu(menu.hidden);});
+  document.addEventListener('click',function(e){if(!menu.hidden&&!menu.contains(e.target))setMenu(false);});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')setMenu(false);});
+  function show(){
+    var h=(location.hash||'').replace('#','');if(!CTX[h])h='inicio';
+    var ss=document.querySelectorAll('.screen');
+    for(var i=0;i<ss.length;i++)ss[i].hidden=(ss[i].id!=='s-'+h);
+    document.body.setAttribute('data-ctx',CTX[h]);
+    var as=menu.querySelectorAll('a');
+    for(var j=0;j<as.length;j++)as[j].setAttribute('aria-current',as[j].getAttribute('data-s')===h?'page':'false');
+    setMenu(false);window.scrollTo(0,0);
+  }
+  window.addEventListener('hashchange',show);show();
+})();
+</script>
+</body>
+</html>
