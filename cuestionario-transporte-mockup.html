@@ -1,0 +1,211 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cuestionario de transporte</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--g:#1F5E4B;--ink:#14201B;--mut:#4A5A52;--line:#C9D6CF;--soft:#EEF3F0}
+*{box-sizing:border-box}
+body{margin:0;background:var(--soft);color:var(--ink);font:400 16px/1.4 "DM Sans",system-ui,sans-serif}
+main{max-width:440px;min-height:100vh;margin:0 auto;padding:28px 24px;background:#fff}
+.ev{font-size:14px;font-weight:700;color:var(--g)}
+.bar{height:4px;margin:6px 0 24px;border-radius:2px;background:#DCE6E0}
+.bar i{display:block;width:33%;height:100%;border-radius:2px;background:var(--g);transition:width .2s}
+h1{margin:0 0 8px;font-size:28px;line-height:1.2}
+.sub{margin:0 0 20px;font-size:15px;color:var(--mut)}
+.f{margin:0 0 20px;padding:0;border:0}
+.t,legend{display:block;margin:0 0 8px;padding:0;font-size:14px;font-weight:700}
+input[type=text],input[type=number],select{width:100%;height:48px;padding:0 12px;border:1.5px solid var(--line);border-radius:12px;background:#fff;color:var(--ink);font:inherit}
+input[type=number]{width:120px}
+.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.g3{grid-template-columns:repeat(3,1fr);gap:8px}
+.col{grid-template-columns:1fr}
+.o{display:flex;align-items:center;gap:10px;min-height:48px;padding:0 14px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer}
+.o:has(input:checked){border-color:var(--g);background:var(--soft)}
+.o input{width:20px;height:20px;margin:0;accent-color:var(--g)}
+button{width:100%;height:52px;border:0;border-radius:12px;font:700 16px "DM Sans",system-ui,sans-serif;cursor:pointer}
+.p{background:var(--g);color:#fff}
+.s{height:44px;margin-bottom:12px;border:1.5px solid var(--g);background:#fff;color:var(--g);font-size:15px}
+.l{height:44px;margin-top:8px;background:none;color:var(--mut)}
+:focus-visible{outline:3px solid #7FB8A3;outline-offset:2px}
+.hidden{display:none!important}
+.err{margin:0 0 12px;font-size:14px;font-weight:700;color:#A32A1B}
+.ok{margin:12px 0 20px;text-align:center}
+.card{display:flex;flex-direction:column;gap:8px;padding:16px;border-radius:12px;background:var(--soft);font-size:15px}
+.note{margin:16px 0;font-size:13px;color:var(--mut)}
+pre{margin:8px 0 0;padding:12px;overflow-x:auto;border-radius:8px;background:var(--soft);font-size:12px}
+</style>
+</head>
+<body>
+<main>
+<div class="ev">[Nombre del evento]</div>
+<div class="sub" id="stepLabel" style="margin:6px 0 0;font-size:13px">Paso 1 de 3</div>
+<div class="bar"><i id="prog"></i></div>
+
+<section id="s1">
+<div id="f1">
+<h1>¿Desde dónde venís?</h1>
+<p class="sub">Lo usamos para estimar la huella de carbono del viaje al evento. Son 2 minutos.</p>
+<div class="f"><label class="t" for="pais">País de origen</label>
+<select id="pais"><option value="Argentina">Argentina</option><option value="otro">Otro país</option></select></div>
+<div class="f hidden" id="gPaisOtro"><label class="t" for="paisOtro">¿Cuál?</label><input type="text" id="paisOtro" autocomplete="country-name"></div>
+<fieldset class="f" id="gCapital"><legend>¿Venís de Córdoba capital?</legend>
+<div class="g col">
+<label class="o"><input type="radio" name="capital" value="si" checked>Sí, de Córdoba capital</label>
+<label class="o"><input type="radio" name="capital" value="no">Vengo de otra localidad</label>
+</div></fieldset>
+<div class="f" id="gBarrio"><label class="t" for="barrio">Barrio</label><select id="barrio"><option value="">Elegí tu barrio</option></select></div>
+<div class="f hidden" id="gLoc"><label class="t" for="loc">Localidad (provincia de Córdoba)</label><select id="loc"><option value="">Elegí tu localidad</option></select></div>
+<p class="err" id="e1" role="alert"></p>
+<button class="p" type="button" id="next">Siguiente</button>
+</div>
+</section>
+
+<section id="s2" class="hidden">
+<div id="f2">
+<h1 id="h2">¿Cómo viniste?</h1>
+<p class="sub">Contanos cómo llegaste al evento. Se cuenta solo el viaje de ida. Si combinaste medios de transporte, cargá cada uno como un tramo.</p>
+<fieldset class="f"><legend>Medio de transporte</legend>
+<div class="g">
+<label class="o"><input type="radio" name="medio" value="auto" checked>Auto</label>
+<label class="o"><input type="radio" name="medio" value="moto">Moto</label>
+<label class="o"><input type="radio" name="medio" value="colectivo">Colectivo</label>
+<label class="o"><input type="radio" name="medio" value="avion">Avión</label>
+</div></fieldset>
+<fieldset class="f" id="gComb"><legend>Combustible</legend>
+<div class="g g3">
+<label class="o"><input type="radio" name="comb" value="nafta" checked>Nafta</label>
+<label class="o"><input type="radio" name="comb" value="gasoil">Gasoil</label>
+<label class="o"><input type="radio" name="comb" value="gas">Gas</label>
+</div></fieldset>
+<div class="f" id="gPers"><label class="t" for="pers">¿Cuántas personas viajaron en ese vehículo, contándote a vos?</label>
+<input type="number" id="pers" min="1" value="1"></div>
+<p class="err" id="e2" role="alert"></p>
+<button class="s" type="button" id="add">+ Agregar otro tramo del viaje</button>
+<button class="p" type="button" id="send">Enviar respuesta</button>
+<button class="l" type="button" id="back">Volver</button>
+</div>
+</section>
+
+<section id="s3" class="hidden">
+<div class="ok">
+<svg width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="Respuesta enviada"><circle cx="32" cy="32" r="30" fill="#EEF3F0" stroke="#1F5E4B" stroke-width="2"/><path d="M20 33l8 8 16-17" fill="none" stroke="#1F5E4B" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<h1 style="margin-top:14px">Respuesta enviada</h1>
+<p class="sub" style="margin:0">Con tus respuestas estimamos la huella de carbono de tu viaje y la sumamos a la del evento.</p>
+</div>
+<div class="card" id="sum"></div>
+<p class="note">Contamos solo tu viaje de ida al evento. La distancia la calculamos nosotros a partir de tu origen, no hace falta que la estimes.</p>
+<details><summary>Ver los datos de esta respuesta</summary><pre id="json"></pre></details>
+<p class="note">Esto es una maqueta: no se envía ningún dato.</p>
+</section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const val = n => document.querySelector('input[name="' + n + '"]:checked').value;
+const NAMES = {auto:'Auto', moto:'Moto', colectivo:'Colectivo', avion:'Avión'};
+let tramos = [], origen = null;
+const BARRIOS = ["1 de Julio","1ra. Junta","1º de Mayo","20 de Junio","23 de Abril","25 de Mayo","4 de Febrero","A.T. E.","Achaval Peña","Acosta","Aeronáutico","Aeropuerto","Alberdi","Alborada (N)","Alborada (S)","Alejandro Centeno","Almirante Brown","Alta Córdoba","Altamira","Alto Alberdi","Alto Hermoso","Alto Palermo","Alto Verde","Altos de Santa Ana","Altos de Vélez Sarsfield","Altos de Villa Cabrera","Altos del Chateau","Altos San Martín","Altos Sud de San Vicente","Ameghino Norte","Ameghino Sud","Ampliación 1º de Mayo","Ampliación Altamira","Ampliación Benjamín Matienzo","Ampliación Empalme","Ampliación Farina","Ampliación General Artigas","Ampliación Jardín Espinosa","Ampliación Kennedy","Ampliación las Palmas","Ampliación los Plátanos","Ampliación Palmar","Ampliación Panamericano","Ampliación Poeta Lugones","Ampliación Pueyrredón","Ampliación Residencial América","Ampliación Rosedal","Ampliación San Fernando","Ampliación San Pablo","Ampliación Vélez Sarsfield","Ana María Zumarán","Anexo las Palmas","Apeadero la Tablada","Argüello","Argüello Norte","Arsenales Anexo","Arturo Capdevila","Autódromo","Avenida","Ayacucho","Bajada de Piedra","Bajada San Roque","Bajo Galán","Bajo General Paz","Bajo Palermo","Bella Vista","Bella Vista Oeste","Benjamín Policarpio Cabral","Betania","Bialet Masse","Boedo","Brigadier San Martín","Cabaña del Pilar","Cabo Farina","Cáceres","California","Camino a 60 Cuadras","Camino a San Carlos","Camino a Villa Pose","Carbo","Carola Lorenzini","Carrara","Carrara de Horizonte","Caseros","Centro","Centro América","Cerro Chico","Cerro de las Rosas","Cerro Norte","Cerveceros","Chateau Carreras","Ciudad de Juan Pablo II","Ciudad Universitaria","Ciudadela","Claros del Bosque","CO.VI.CO.","Cofico","Colinas de Bella Vista","Colinas de Vélez Sarsfield","Colinas del Cerro","Colón","Colonia Lola","Comandante Espora","Comercial","Congreso","Consorcio 16 de Noviembre","Consorcio Esperanza","Cooperativa 16 de Noviembre","Corral de Palos","Country los Algarrobos","Crisol Norte","Crisol Sud","Cupani","De los Cuartetos","De Mis Sueños","Dean Funes","Docta","Dr Remo M. Copello","Dr René Favaloro","Ducasse","Ejército Argentino","El Bosque","El Cabildo","El Carmelo","El Cerrito","El Pueblito","El Quebrachal","El Quebracho","El Refugio","El Trébol","El Tropezón","El Viejo Algarrobo","Emaús","Empalme","Empalme Casas de Obreros y Empleados","Escobar","Estación Ferreyra","Estación Flores","Evita","Ferrer","Ferreyra","Ferroviario Mitre","Finca la Dorotea","Fincas del Sur","General Arenales","General Artigas","General Belgrano","General Bustos","General Mosconi","General Paz","General Pueyrredón","General Savio","Granadero Pringles","Granja de Funes","Guarnición Area Cba","Guarnición Militar Cba","Guayaquil","Guiñazú","Guiñazú Sud","Güemes","Hipólito Irigoyen","Hogar Propio","Horizonte","Inaudi","Independencia","Industrial Este","Industrial Oeste","Ipona","Irupe","Ituzaingó","Ituzaingó Anexo","Ituzaingó II","Jardín","Jardín del Pilar","Jardín del Sud","Jardín Espinosa","Jardín Hipódromo","Jerónimo Luis de Cabrera","Jockey","Jockey Club","José Hernández","José Ignacio Díaz 1a Sección","José Ignacio Díaz 2a Sección","José Ignacio Díaz 3a Sección","José Ignacio Rucci","Juan B. Justo","Juan XXIII","Juniors","Kairos","Kennedy","La Carbonada","La Carolina","La Esperanza","La Floresta","La France","La Fraternidad","La Hortensia","La Reserva","La Salle","La Toma","Lamadrid","Las Cañitas","Las Cañuelas","Las Dalias","Las Delicias","Las Flores","Las Huertillas","Las Lilas","Las Magnolias","Las Margaritas","Las Palmas","Las Playas","Las Rosas","Las Violetas","Liceo General Paz","Lomas de la Carolina","Lomas de San Martín","Los Álamos","Los Ángeles","Los Boulevares","Los Ceibos","Los Chingolos","Los Eucaliptus","Los Filtros","Los Fresnos","Los Gigantes","Los Granados","Los Hornillos","Los Jacarandaes","Los Josefinos","Los Naranjos","Los Olmos","Los Olmos Sud","Los Paraísos","Los Pinos","Los Plátanos","Los Robles","Los Sauces","Lourdes","Maipú 1a Sección","Maipú 2a Sección","Maldonado","Manantiales","Manantiales II","Marcelo T. de Alvear","Marcos Sastre","Marechal","María Lastenia","Mariano Balcarce","Mariano Fragueiro","Marqués de Sobremonte","Maurizi","Mercantil","Militar General Deheza","Mirador","Mirador del Chateau","Miralta","Mirizi","Muller","Mutual de los Docentes","Nicolás Avellaneda","Nuestro Hogar II","Nuestro Hogar III","Nueva Córdoba","Nueva Córdoba Anexa","Nueva Italia","Nuevo Urca","O.S.N.","Obispo Angelelli","Obrero","Observatorio","Ombú","Oña","Padre Claret","Palmar","Panamericano","Parque Alameda","Parque Atlántica","Parque Capital","Parque Capital Sur","Parque Chacabuco","Parque Chateau Carreras","Parque Corema","Parque del Este","Parque Don Bosco","Parque Futura","Parque Jorge Newbery","Parque Latino","Parque Liceo 1a Sección","Parque Liceo 2a Sección","Parque Liceo 3a Sección","Parque los Molinos","Parque Modelo","Parque Montecristo","Parque República","Parque San Carlos","Parque San Vicente","Parque Sarmiento","Parque Tablada","Parque Vélez Sarsfield","Paso de los Andes","Patria","Patricios","Patricios Este","Patricios Norte","Patricios Oeste","Poeta Lugones","Policial","Portal de Córdoba","Portal del Jacaranda","Posta de Vargas","Providencia","Puente Blanco","Quebrada de las Rosas","Quinta Santa Ana","Quintas de Argüello","Quintas de Ferreyra","Quintas de Flores","Quintas de Italia","Quintas de San Jorge","Quintas del Sur","Ramón J. Carcano","Recreo del Norte","Remedios de Escalada","Renacimiento","René Favaloro Sud","Residencial América","Residencial Aragón","Residencial Olivos","Residencial San Carlos","Residencial San Jorge","Residencial San Roque","Residencial Sud","Residencial Vélez Sarsfield","Rivadavia","Rivera Indarte","Rocío del Sur","Rogelio Martínez","Rosedal","S.E.P.","Sacchi","San Antonio","San Cayetano","San Daniel","San Felipe","San Fernando","San Francisco","San Ignacio","San Javier","San José","San Lorenzo (S)","San Lorenzo Norte","San Luis de Francia","San Marcelo","San Martín","San Martín Anexo","San Martín Norte","San Nicolás","San Pablo","San Pedro Nolasco","San Rafael","San Ramón","San Salvador","San Vicente","Santa Ana Residencial","Santa Cecilia","Santa Clara de Asis","Santa Isabel 1a Sección","Santa Isabel 2a Sección","Santa Isabel 3a Sección","Santa Rita","Santa Rosa Residencial","Sargento Cabral","Sarmiento","Siete Soles","Smata","Solares de Santa María","Suárez","Tablada Park","Talleres (E)","Talleres (O)","Talleres Sud","Tejas de la Candelaria","Tejas del Sur","Teodoro Fels","Tranviarios","Tte. Benjamín Matienzo","U.O.C.R.A.","Universitario de Horizonte","Urca","Uritorco","Urquiza","V.I.C.O.R.","Valle Cercano","Valle del Cerro","Valle Escondido","Villa 9 de Julio","Villa Adela","Villa Alberdi","Villa Alberto","Villa Alberto Anexo","Villa Alicia Risler","Villa Allende Parque","Villa Argentina","Villa Aspasia","Villa Ávalos","Villa Azalaiz","Villa Azalaiz Oeste","Villa Belgrano","Villa Bustos","Villa Cabrera","Villa Centenario","Villa Claret","Villa Claudina","Villa Corina","Villa Cornu","Villa Coronel Olmedo","Villa Derna","Villa el Libertador","Villa Esquiu","Villa Eucarística","Villa General Urquiza","Villa Gran Parque","Villa Mafekin","Villa Marta","Villa Martínez","Villa Páez","Villa Quisquizacate","Villa Retiro","Villa Retiro de Horizonte","Villa Revol","Villa Revol Anexo","Villa Rivadavia Anexo \"A\"","Villa Rivera Indarte","Villa Saldán","Villa San Carlos","Villa San Isidro","Villa Serrana","Villa Siburu","Villa Silvano Funes","Villa Solferino","Villa Unión","Villa Warcalde","Villa Zeppelin","Vivero Norte","Yapeyú","Yofre H","Yofre I","Yofre Norte","Yofre Sud","Zepa"];
+BARRIOS.forEach(b => { const o = document.createElement('option'); o.value = o.textContent = b; $('barrio').appendChild(o); });
+const LOCALIDADES = ["1 de Agosto","Achiras","Adelia María","Agua de Oro","Alcira","Aldea Santa María","Alejandro Roca","Alejo Ledesma","Alicia","Almafuerte","Almirante Brown","Alpa Corral","Alta Gracia","Alto Alegre","Alto de los Quebrachos","Alto Resbaloso - el Barrial","Altos de Chipion","Amboy","Ambul","Ana Zumaran","Anisacate","Arias","Arroyito","Arroyo Algodon","Arroyo Cabral","Arroyo los Patos","Arroyo San Antonio","Ascochinga","Assunta","Atahona","Ausonia","Avellaneda","Ballesteros","Ballesteros Sur","Balnearia","Barrio Gilbert","Barrio Gilbert (1° de Mayo)","Barrio las Quintas","Barrio Nuevo Río Ceballos","Barrio Santa Isabel","Barrio Villa del Parque","Bañado de Soto","Bell Ville","Bengolea","Benjamín Gould","Berrotaran","Bialet Masse","Bouwer","Brinckmann","Bulnes","Cabalango","Calchin","Calchin Oeste","Camilo Aldao","Caminiaga","Campos del Virrey","Canals","Candelaria Sur","Canteras el Sauce","Canteras Quilpo","Capilla de los Remedios","Capilla de Siton","Capilla del Carmen","Capilla del Monte","Capilla Vieja","Capitán General Bernardo O'Higgins","Carnerillo","Carrilobo","Casa Bamba","Casa Grande","Caseros Centro","Causana","Cavanagh","Cañada de Luque","Cañada de Machado","Cañada de Río Pinto","Cañada del Sauce","Cerro Colorado","Chajan","Chalacea","Chancani","Charbonier","Charras","Chazon","Chañar Viejo","Chilibroste","Chucul","Churqui Cañada","Chuña","Chuña Huasi","Cienaga del Coro","Cintra","Ciudad de los Niños","Colazo","Colonia 10 de Julio","Colonia Almada","Colonia Anita","Colonia Barge","Colonia Bismarck","Colonia Bremen","Colonia Caroya","Colonia Italiana","Colonia Iturraspe","Colonia las Cuatro Esquinas","Colonia las Pichanas","Colonia Marina","Colonia Prosperidad","Colonia San Bartolome","Colonia San Pedro","Colonia Santa María","Colonia Tirolesa","Colonia Valtelina","Colonia Veinticinco","Colonia Vicente Aguero","Colonia Videla","Colonia Vignaud","Conlara","Copacabana","Coronel Baigorria","Coronel Moldes","Corral de Bustos","Corral Quemado","Corralito","Cosquin","Costa Azul","Costasacate","Country Chacras de la Villa","Country Chacras de la Villa - Country Sa","Country San Isidro","Cruz Alta","Cruz Caña","Cruz de Caña","Cruz del Eje","Cuesta Blanca","Dalmacio Velez","Dean Funes","Del Campillo","Despeñaderos","Devoto","Diego de Rojas","Dique Chico","Dos Arroyos","Dumesnil","El Alcalde","El Arañado","El Brete","El Chacho","El Corcovado - el Torreon","El Crispin","El Diquecito","El Durazno","El Fortin","El Fuertecito","El Huayco","El Manzano","El Pantanillo","El Potrerillo","El Pueblito","El Rastreador","El Rincon","El Rodeo","El Tío","El Tuscal","El Valle","Elena","Embalse","Esquina","Esquina del Alambre","Estación Colonia Tirolesa","Estación Lecueder","Estación Luxardo","Estancia de Guadalupe","Estancia Vieja","Etruria","Eufrasio Loza","Falda del Carmen","Falda del Cañete","Freyre","General Baldissera","General Cabrera","General Deheza","General Fotheringham","General Levalle","General Paz","General Roca","Guanaco Muerto","Guasapampa","Guatimozin","Guiñazu Norte","Gutemberg","Hernando","Hipolito Bouchard","Huanchillas","Huerta Grande","Huinca Renanco","Idiazabal","Impira","Inriville","Isla Verde","Italo","James Craik","Jardin Arenales","Jesus María","José de la Quintana","Juarez Celman","Justiniano Posse","Kilómetro 658","La Banda","La Batea","La Boca del Río","La Calera","La Carbonada","La Carlota","La Carolina","La Cautiva","La Cesira","La Cortadera","La Cruz","La Cumbre","La Cumbrecita","La Donosa","La Falda","La Floresta","La Francia","La Gilda","La Granja","La Higuera","La Laguna","La Morada","La Paisanita","La Palestina","La Pampa","La Paquita","La Para","La Paz","La Perla","La Playa","La Playosa","La Poblacion","La Posta","La Puerta","La Quinta","La Ramada","La Rancherita","La Rinconada","La Serranita","La Tordilla","La Travesia","Laborde","Laboulaye","Laguna Larga","Las Acequias","Las Albahacas","Las Arrias","Las Bajadas","Las Caleras","Las Calles","Las Cañadas","Las Chacras","Las Corzuelas","Las Gramillas","Las Higueras","Las Isletillas","Las Jarillas","Las Junturas","Las Mojarras","Las Oscuras","Las Palmas","Las Perdices","Las Peñas","Las Playas","Las Rabonas","Las Saladas","Las Tapias","Las Varas","Las Varillas","Las Vertientes","Leguizamon","Leones","Loma Bola","Los Callejones","Los Cedros","Los Cedros - las Quintas","Los Cerrillos","Los Chañaritos","Los Cisnes","Los Cocos","Los Condores","Los Hornillos","Los Hoyos","Los Mistoles","Los Molinos","Los Molles","Los Pozos","Los Reartes","Los Surgentes","Los Talares","Los Zorros","Lozada","Luca","Lucio V. Mansilla","Luque","Lutti","Luyaba","Malagueño","Malena","Mallin","Malvinas Argentinas","Manfredi","Maquinista Gallini","Marcos Juarez","Marull","Matorrales","Mattaldi","Mayu Sumaj","Media Naranja","Melo","Mendiolaza","Mi Granja","Mi Valle","Milenica","Mina Clavero","Miramar","Monte Buey","Monte de los Gauchos","Monte del Rosario","Monte Leña","Monte Maiz","Monte Ralo","Montecristo","Morrison","Morteros","Mussi","Nicolás Bruzzone","Noetinger","Nono","Obispo Trejo","Olaeta","Oliva","Olivares de San Nicolás","Onagoity","Oncativo","Ordoñez","Pacheco de Melo","Pajas Blancas","Pampayasta Norte","Pampayasta Sur","Panaholma","Parque Calmayo","Parque Norte","Pascanas","Pasco","Paso del Durazno","Paso Viejo","Pilar","Pincen","Piquillin","Plaza de Mercedes","Plaza Luxardo","Plaza San Francisco","Porteña","Potrero de Garay","Pozo del Molle","Pozo Nuevo","Pueblo Comechingones","Pueblo Italiano","Puesto de Castro","Punta del Agua","Quebracho Herrado","Quebracho Ladeado","Quebrada de los Pozos","Quebrada de Luna","Quilino","Rafael García","Ramón J. Carcano","Ranqueles","Rayo Cortado","Rincon","Río Bamba","Río Ceballos","Río Cuarto","Río de los Sauces","Río Primero","Río Segundo","Río Tercero","Rosales","Rosario del Saladillo","Sacanta","Sagrada Familia","Saira","Saladillo","Saldan","Salsacate","Salsipuedes","Sampacho","San Agustín","San Antonio de Arredondo","San Antonio de Litin","San Basilio","San Carlos Minas","San Clemente","San Esteban","San Francisco","San Francisco del Chañar","San Geronimo","San Huberto","San Ignacio (Loteo San Javier)","San Ignacio (Loteo Velez Crespo)","San Javier y Yacanto","San Joaquin","San José","San José de la Dormida","San José de las Salinas","San Lorenzo","San Marcos","San Marcos Sierra","San Martín","San Nicolás","San Pedro","San Pedro de Gutemberg","San Pedro de Toyos","San Pedro Norte","San Roque","San Roque del Lago","San Severo","San Vicente","Sanabria","Santa Catalina","Santa Elena","Santa Eufemia","Santa Magdalena","Santa María de Punilla","Santa Monica","Santa Rosa de Calamuchita","Santa Rosa de Río Primero","Santiago Temple","Sarmiento","Saturnino María Laspiur","Sauce Arriba","Sebastián Elcano","Seeber","Segunda Usina","Serrano","Serrezuela","Silvio Pellico","Simbolar","Sinsacate","Socavones","Solar de los Molinos","Suco","Tala Cañada","Tala Huasi","Talaini","Tancacha","Taninga","Tanti","Tasna","Tejas Tres","Ticino","Tierra Alta","Tinoco","Tío Pujio","Toledo","Toro Pujio","Tosno","Tosquitas","Transito","Tuclame","Ucacha","Unquillo","Valle Alegre","Valle de Anisacate","Valle Hermoso","Viamonte","Vicuña Mackenna","Villa Albertina","Villa Allende","Villa Alpina","Villa Amancay","Villa Ascasubi","Villa Berna","Villa Candelaria Norte","Villa Carlos Paz","Villa Cerro Azul","Villa Ciudad de America","Villa Ciudad de America (Loteo Diego de","Villa Ciudad Parque los Reartes","Villa Ciudad Parque los Reartes (1° Sección)","Villa Ciudad Parque los Reartes (3° Sección)","Villa Ciudad Parques los Reartes (1° Sección)","Villa Concepcion del Tío","Villa Corazon de María","Villa Cura Brochero","Villa de las Rosas","Villa de María","Villa de Pocho","Villa de Soto","Villa del Dique","Villa del Prado","Villa del Rosario","Villa del Totoral","Villa del Transito","Villa Dolores","Villa el Chacay","Villa el Fachinal - Parque Norte - Guiña","Villa el Tala","Villa Elisa","Villa Flor Serrana","Villa Fontana","Villa General Belgrano","Villa Giardino","Villa Gutiérrez","Villa Huidobro","Villa la Bolsa","Villa la Rivera","Villa la Viña","Villa Lago Azul","Villa los Aromos","Villa los Llanos","Villa los Patos","Villa María","Villa Nueva","Villa Oeste","Villa Parque Santa Ana","Villa Parque Siquiman","Villa Pastora","Villa Quilino","Villa Quillinzo","Villa Reduccion","Villa Río Icho Cruz","Villa Rossi","Villa Rumipal","Villa San Esteban","Villa San Isidro - José de la Quintana","Villa San José","Villa San Miguel","Villa Santa Cruz del Lago","Villa Santa Eugenia","Villa Sarmiento","Villa Sierras de Oro","Villa Tulumba","Villa Valeria","Villa Yacanto","Washington","Wenceslao Escalante","Yocsina"];
+LOCALIDADES.forEach(b => { const o = document.createElement('option'); o.value = o.textContent = b; $('loc').appendChild(o); });
+
+function go(n){
+  ['s1','s2','s3'].forEach((s,i) => $(s).classList.toggle('hidden', i + 1 !== n));
+  $('prog').style.width = (n * 100 / 3) + '%';
+  $('stepLabel').textContent = 'Paso ' + n + ' de 3';
+  window.scrollTo(0, 0);
+}
+function sync1(){
+  const otro = $('pais').value === 'otro', cap = val('capital') === 'si';
+  $('gPaisOtro').classList.toggle('hidden', !otro);
+  $('gCapital').classList.toggle('hidden', otro);
+  $('gBarrio').classList.toggle('hidden', otro || !cap);
+  $('gLoc').classList.toggle('hidden', otro || cap);
+}
+function sync2(){
+  const m = val('medio'), veh = m === 'auto' || m === 'moto';
+  $('gComb').classList.toggle('hidden', !veh);
+  $('gPers').classList.toggle('hidden', !veh);
+}
+$('pais').onchange = sync1;
+document.querySelectorAll('input[name="capital"]').forEach(r => r.onchange = sync1);
+document.querySelectorAll('input[name="medio"]').forEach(r => r.onchange = sync2);
+
+$('next').onclick = () => {
+  const otro = $('pais').value === 'otro', cap = val('capital') === 'si';
+  const o = {pais: otro ? $('paisOtro').value.trim() : 'Argentina'};
+  if (!otro){
+    o.capital = cap;
+    if (cap) o.barrio = $('barrio').value.trim(); else o.localidad = $('loc').value.trim();
+  }
+  const falta = otro ? !o.pais : (cap ? !o.barrio : !o.localidad);
+  if (falta){
+    $('e1').textContent = otro ? 'Indicá tu país.' : (cap ? 'Elegí tu barrio de la lista.' : 'Elegí tu localidad de la lista.');
+    (otro ? $('paisOtro') : cap ? $('barrio') : $('loc')).focus();
+    return;
+  }
+  $('e1').textContent = '';
+  origen = o;
+  go(2);
+};
+
+function leerTramo(){
+  const m = val('medio'), veh = m === 'auto' || m === 'moto';
+  const t = {medio: m};
+  if (veh){ t.combustible = val('comb'); t.personas = parseInt($('pers').value, 10); }
+  return t;
+}
+function valido(t){
+  if (t.personas !== undefined && !(t.personas >= 1)){
+    $('e2').textContent = 'Indicá cuántas personas viajaron, mínimo 1.';
+    return false;
+  }
+  $('e2').textContent = '';
+  return true;
+}
+function reiniciarTramo(){
+  document.querySelector('input[name="medio"][value="auto"]').checked = true;
+  document.querySelector('input[name="comb"][value="nafta"]').checked = true;
+  $('pers').value = 1;
+  $('h2').textContent = 'Tramo ' + (tramos.length + 1) + ': ¿cómo viniste?';
+  sync2();
+}
+$('add').onclick = () => {
+  const t = leerTramo();
+  if (!valido(t)) return;
+  tramos.push(t);
+  reiniciarTramo();
+};
+$('back').onclick = () => go(1);
+
+function texto(t){
+  let s = NAMES[t.medio];
+  if (t.combustible) s += ' a ' + t.combustible;
+  if (t.personas) s += ', ' + t.personas + (t.personas === 1 ? ' persona' : ' personas');
+  return s;
+}
+function linea(txt, bold){
+  const d = document.createElement('div');
+  d.textContent = txt;
+  if (bold) d.style.fontWeight = '700';
+  $('sum').appendChild(d);
+}
+$('send').onclick = () => {
+  const t = leerTramo();
+  if (!valido(t)) return;
+  tramos.push(t);
+  $('sum').replaceChildren();
+  linea('Tu respuesta', true);
+  const lugar = origen.pais !== 'Argentina' ? origen.pais : (origen.capital ? origen.barrio + ', Córdoba capital' : origen.localidad);
+  linea('Origen: ' + lugar);
+  tramos.forEach((x, i) => linea((tramos.length > 1 ? 'Tramo ' + (i + 1) : 'Transporte') + ': ' + texto(x)));
+  $('json').textContent = JSON.stringify({origen: origen, tramos: tramos}, null, 2);
+  go(3);
+};
+sync1(); sync2();
+</script>
+</body>
+</html>
