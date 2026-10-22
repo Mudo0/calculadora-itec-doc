@@ -1,8 +1,8 @@
 ---
-The filenames are following the pattern NNNN-title-with-dashes.md (ADR-0005), where
+Los nombres de los archivos siguen el patrón NNNN-titulo-con-guiones.md (ADR-0005), donde
 
-    NNNN is a consecutive number and we assume that there won’t be more than 9,999 ADRs in one repository.
-    The title is stored using dashes and lowercase, because [adr-tools] also does that.
+    NNNN es un número consecutivo y asumimos que no habrá más de 9.999 ADRs en un repositorio.
+    El título se almacena usando guiones y minúsculas, porque [adr-tools] también lo hace así.
 
 -- decisions
     |-- backend
@@ -12,88 +12,88 @@ The filenames are following the pattern NNNN-title-with-dashes.md (ADR-0005), wh
 
 
 
-# These are optional metadata elements. Feel free to remove any of them.
-status: "{proposed | rejected | accepted | deprecated | … | superseded by ADR-0123"
-date: { YYYY-MM-DD when the decision was last updated }
-decision-makers: { list everyone involved in the decision }
+# Estos son elementos de metadatos opcionales. Siéntete libre de eliminar cualquiera de ellos.
+status: "{proposed (propuesto) | rejected (rechazado) | accepted (aceptado) | deprecated (obsoleto) | … | superseded by (reemplazado por) ADR-0123"
+date: { AAAA-MM-DD cuando la decisión se actualizó por última vez }
+decision-makers: { lista de todos los involucrados en la decisión }
 consulted:
   {
-    list everyone whose opinions are sought (typically subject-matter experts); and with whom there is a two-way communication,
+    lista de todos a quienes se les pide opinión (típicamente expertos en la materia); y con quienes existe una comunicación bidireccional,
   }
 informed:
   {
-    list everyone who is kept up-to-date on progress; and with whom there is a one-way communication,
+    lista de todos los que se mantienen actualizados sobre el progreso; y con quienes hay una comunicación unidireccional,
   }
 ---
 
-# {short title, representative of solved problem and found solution}
+# {título corto, representativo del problema resuelto y la solución encontrada}
 
-## Context and Problem Statement
+## Contexto y Declaración del Problema
 
-{Describe the context and problem statement, e.g., in free form using two to three sentences or in the form of an illustrative story. You may want to articulate the problem in form of a question and add links to collaboration boards or issue management systems.}
+{Describe el contexto y la declaración del problema, por ejemplo, en formato libre usando dos o tres oraciones o en forma de una historia ilustrativa. Quizás desees articular el problema en forma de pregunta y agregar enlaces a tableros de colaboración o sistemas de gestión de problemas.}
 
-<!-- This is an optional element. Feel free to remove. -->
+<!-- Este es un elemento opcional. Siéntete libre de eliminarlo. -->
 
-## Decision Drivers
+## Impulsores de la Decisión
 
-- {decision driver 1, e.g., a force, facing concern, …}
-- {decision driver 2, e.g., a force, facing concern, …}
-- … <!-- numbers of drivers can vary -->
+- {impulsor de decisión 1, ej., una fuerza, preocupación que se enfrenta, …}
+- {impulsor de decisión 2, ej., una fuerza, preocupación que se enfrenta, …}
+- … <!-- la cantidad de impulsores puede variar -->
 
-## Considered Options
+## Opciones Consideradas
 
-- {title of option 1}
-- {title of option 2}
-- {title of option 3}
-- … <!-- numbers of options can vary -->
+- {título de la opción 1}
+- {título de la opción 2}
+- {título de la opción 3}
+- … <!-- la cantidad de opciones puede variar -->
 
-## Decision Outcome
+## Resultado de la Decisión
 
-Chosen option: "{title of option 1}", because {justification. e.g., only option, which meets k.o. criterion decision driver | which resolves force {force} | … | comes out best (see below)}.
+Opción elegida: "{título de la opción 1}", porque {justificación. ej., única opción que cumple con el criterio excluyente del impulsor de decisión | que resuelve la fuerza {fuerza} | … | sale mejor parada (ver abajo)}.
 
-<!-- This is an optional element. Feel free to remove. -->
+<!-- Este es un elemento opcional. Siéntete libre de eliminarlo. -->
 
-### Consequences
+### Consecuencias
 
-- Good, because {positive consequence, e.g., improvement of one or more desired qualities, …}
-- Bad, because {negative consequence, e.g., compromising one or more desired qualities, …}
-- … <!-- numbers of consequences can vary -->
+- Bueno, porque {consecuencia positiva, ej., mejora de una o más cualidades deseadas, …}
+- Malo, porque {consecuencia negativa, ej., compromete una o más cualidades deseadas, …}
+- … <!-- la cantidad de consecuencias puede variar -->
 
-<!-- This is an optional element. Feel free to remove. -->
+<!-- Este es un elemento opcional. Siéntete libre de eliminarlo. -->
 
-### Confirmation
+### Confirmación
 
-{Describe how the implementation of/compliance with the ADR can/will be confirmed. Are the design that was decided for and its implementation in line with the decision made? E.g., a design/code review or a test with a library such as ArchUnit can help validate this. Not that although we classify this element as optional, it is included in many ADRs.}
+{Describe cómo se puede/podrá confirmar la implementación/cumplimiento del ADR. ¿Están el diseño que se decidió y su implementación en línea con la decisión tomada? Ej., una revisión de diseño/código o una prueba con una biblioteca como ArchUnit pueden ayudar a validar esto. Nota: aunque clasificamos este elemento como opcional, se incluye en muchos ADRs.}
 
-<!-- This is an optional element. Feel free to remove. -->
+<!-- Este es un elemento opcional. Siéntete libre de eliminarlo. -->
 
-## Pros and Cons of the Options
+## Pros y Contras de las Opciones
 
-### {title of option 1}
+### {título de la opción 1}
 
-<!-- This is an optional element. Feel free to remove. -->
+<!-- Este es un elemento opcional. Siéntete libre de eliminarlo. -->
 
-{example | description | pointer to more information | …}
+{ejemplo | descripción | enlace a más información | …}
 
-- Good, because {argument a}
-- Good, because {argument b}
-<!-- use "neutral" if the given argument weights neither for good nor bad -->
-- Neutral, because {argument c}
-- Bad, because {argument d}
-- … <!-- numbers of pros and cons can vary -->
+- Bueno, porque {argumento a}
+- Bueno, porque {argumento b}
+<!-- usa "neutral" si el argumento dado no pesa ni para bien ni para mal -->
+- Neutral, porque {argumento c}
+- Malo, porque {argumento d}
+- … <!-- la cantidad de pros y contras puede variar -->
 
-### {title of other option}
+### {título de otra opción}
 
-{example | description | pointer to more information | …}
+{ejemplo | descripción | enlace a más información | …}
 
-- Good, because {argument a}
-- Good, because {argument b}
-- Neutral, because {argument c}
-- Bad, because {argument d}
+- Bueno, porque {argumento a}
+- Bueno, porque {argumento b}
+- Neutral, porque {argumento c}
+- Malo, porque {argumento d}
 - …
 
-<!-- This is an optional element. Feel free to remove. -->
+<!-- Este es un elemento opcional. Siéntete libre de eliminarlo. -->
 
-## More Information
+## Más Información
 
-{You might want to provide additional evidence/confidence for the decision outcome here and/or document the team agreement on the decision and/or define when/how this decision the decision should be realized and if/when it should be re-visited. Links to other decisions and resources might appear here as well.}"
+{Es posible que desees proporcionar evidencia/confianza adicional para el resultado de la decisión aquí y/o documentar el acuerdo del equipo sobre la decisión y/o definir cuándo/cómo esta decisión debería realizarse y si/cuándo debería ser revisada. Los enlaces a otras decisiones y recursos también podrían aparecer aquí.}
