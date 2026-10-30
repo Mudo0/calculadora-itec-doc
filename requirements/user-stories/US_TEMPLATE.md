@@ -1,48 +1,50 @@
-# US-[ID]: [Título descriptivo de la funcionalidad]
+# US-[ID]: [Título corto y específico de la funcionalidad]
 
-**Como:** [Rol del usuario o actor del sistema]  
-**Quiero:** [Acción o requerimiento específico]  
-**Para:** [Beneficio, objetivo de negocio o valor que aporta]  
-
----
-
-### Descripción y Contexto
-[Breve explicación del problema que resuelve, dependencias funcionales o consideraciones técnicas relevantes].
+**Como:** [Rol exacto del usuario o sistema actor]  
+**Quiero:** [Acción medible, concreta y atómica]  
+**Para:** [Impacto o razón de negocio real y comprobable]  
 
 ---
 
-### Criterios de Aceptación (Escenarios de Prueba / BDD)
-
-#### Escenario 1: [Camino feliz / Caso estándar de éxito]
-- **Dado** [Estado inicial del sistema, entidades cargadas, permisos o datos preexistentes]
-- **Y** [Condición adicional de entrada o contexto]
-- **Cuando** [Acción ejecutada: llamada al endpoint, método de dominio o evento]
-- **Entonces** [Resultado esperado: valor retornado, nuevo estado del sistema o evento emitido]
-- **Y** [Validaciones complementarias de salida]
-
-#### Escenario 2: [Caso borde / Validación de datos o reglas de negocio]
-- **Dado** [Dato de entrada fuera de rango, formato inválido o estado inconsistente]
-- **Cuando** [Se intenta procesar la operación]
-- **Entonces** [El sistema debe rechazar la operación lanzando una excepción específica o código de error]
-- **Y** [Efecto colateral verificado: ej. la base de datos no sufre modificaciones]
-
-#### Escenario 3: [Seguridad y Permisos / Control de acceso]
-- **Dado** [Usuario autenticado con un rol no autorizado o sin los permisos requeridos]
-- **Cuando** [Intenta ejecutar la operación o acceder al recurso protegido]
-- **Entonces** [El sistema debe denegar el acceso con error 403 Forbidden o UnauthorizedException]
+### Descripción
+[Contexto breve sobre qué motiva esta US. No incluir descripciones genéricas como "para que sea mejor". Mencionar si existe dependencia con otra US previa].
 
 ---
 
-### Reglas de Dominio y Fórmulas
-- **Fórmula / Algoritmo:** [Expresión matemática formal o regla lógica, ej. $R = A \times B + C$]
-- **Tipos de datos y precisión:** [Tipos primitivos/objetos de valor, ej. BigDecimal / decimal con escala fija, manejo de redondeo Half-Up]
-- **Validaciones obligatorias:** [Restricciones de formato, valores nulos, rangos válidos]
+### Criterios de Aceptación (Escenarios BDD)
+
+> **Regla estricta:** Los escenarios deben detallar datos específicos y resultados esperables. Evitar palabras vagas como "correctamente", "bien", "apropiado", "rápido" o "error genérico". Todo debe ser medible.
+
+#### Escenario 1: [Flujo principal con datos específicos]
+- **Dado** [Estado inicial, ej: "un factor de emisión de 0.285400 tCO2e/MWh almacenado en 'emission_factor'"]
+- **Y** [Condición adicional, ej: "el usuario ingresa un consumo mensual válido"]
+- **Cuando** [Acción ejecutada con ejemplos numéricos o llamadas específicas]
+- **Entonces** [Resultado exacto, ej: "el sistema retorna el valor multiplicado con 2 decimales de precisión"]
+- **Y** [Efecto colateral específico, ej: "se guarda el registro en la tabla X con el estado Y"]
+
+#### Escenario 2: [Manejo de un límite numérico, formato o validación]
+- **Dado** [Ej: "un usuario ingresa un consumo negativo (-10)"]
+- **Cuando** [Ej: "se presiona calcular o se envía el request a /api/calcular"]
+- **Entonces** [Respuesta medible, ej: "el sistema retorna el código 400 Bad Request"]
+- **Y** [Mensaje específico esperado, ej: "con el mensaje 'El consumo no puede ser menor a cero'"]
+- **Y** [Comportamiento del sistema, ej: "no se registra la transacción en la base de datos"]
+
+#### Escenario 3: [Control de acceso, roles o concurrencia]
+- **Dado** [Ej: "un usuario con rol 'EMPRESA_LECTURA' autenticado con JWT"]
+- **Cuando** [Ej: "intenta modificar el factor de emisión de CAMMESA"]
+- **Entonces** [Respuesta estricta, ej: "la API deniega el acceso con 403 Forbidden"]
+
+---
+
+### Reglas de Dominio, Archivos y Restricciones
+
+- **Fórmulas Matemáticas:** [Detallar la fórmula exacta si aplica. Ej: $Emisiones = Consumo \times Factor$].
+- **Archivos/Módulos Impactados:** [Rutas o nombres exactos, ej: `src/main/java/.../CalculationService.java`, `docs/requirements/domain-rules.md`, `dataset-aceptacion-v1.sql`].
+- **Tipos de Datos Restringidos:** [Definir tipos estrictos. Ej: "Los cálculos intermedios de factor de emisión deben usar `BigDecimal` con precisión 6. No usar `Double` o `Float`"].
 
 ---
 
 ### Notas Técnicas para TDD
-- **Entidades / Value Objects involucrados:** [Nombres de clases o módulos del dominio]
-- **Casos de prueba unitarios mínimos sugeridos:**
-  - `deberia_calcular_correctamente_cuando_datos_son_validos()`
-  - `deberia_lanzar_excepcion_cuando_valor_es_negativo()`
-  - `deberia_denegar_acceso_cuando_usuario_no_tiene_rol_requerido()`
+- **Casos Unitarios Obligatorios:** 
+  - `metodoDePrueba_con_input_X_espera_Y()`
+  - `metodoDePrueba_falla_si_input_es_nulo()`
