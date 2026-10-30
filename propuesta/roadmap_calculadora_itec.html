@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roadmap: Calculadora Huella de Carbono ITEC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        'itec-green': '#10b981',
+                        'itec-dark': '#0f172a',
+                        'itec-card': '#1e293b',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        .phase-btn {
+            transition: all 0.3s ease;
+        }
+        .phase-btn.active {
+            background-color: #10b981;
+            color: #ffffff;
+            border-color: #10b981;
+            box-shadow: 0 4px 14px 0 rgba(16, 185, 129, 0.39);
+            transform: scale(1.05);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Connecting lines for roadmap */
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #334155;
+            z-index: -1;
+            transform: translateY(-50%);
+        }
+
+        .arch-box {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.2s;
+        }
+        .arch-box:hover {
+            transform: translateY(-2px);
+            border-color: #10b981;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4 sm:px-8">
+
+    <header class="text-center max-w-4xl mx-auto mb-12 fade-in">
+        <div class="inline-flex items-center justify-center p-3 bg-itec-green/20 rounded-full mb-4 text-itec-green">
+            <i class="ph ph-leaf text-4xl"></i>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
+            Calculadora ITEC: Plan de Evolución
+        </h1>
+        <p class="text-slate-400 text-lg md:text-xl">
+            Arquitectura y roadmap incremental desde un prototipo local hasta un SaaS Multi-Tenant.
+        </p>
+    </header>
+
+    <!-- Roadmap Timeline -->
+    <div class="w-full max-w-5xl mx-auto mb-16 relative fade-in" style="animation-delay: 0.1s;">
+        <div class="hidden md:block timeline-line"></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+            <!-- Phase 1 Button -->
+            <button onclick="selectPhase(1)" id="btn-phase-1" class="phase-btn active bg-slate-800 border-2 border-slate-600 rounded-2xl p-6 text-center cursor-pointer flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full bg-slate-700 group-hover:bg-itec-green/20 flex items-center justify-center mb-4 transition-colors">
+                    <i class="ph ph-terminal-window text-2xl group-hover:text-itec-green"></i>
+                </div>
+                <h3 class="font-bold text-xl mb-2">Fase 1</h3>
+                <p class="text-sm opacity-80">Prototipo Core Local</p>
+            </button>
+
+            <!-- Phase 2 Button -->
+            <button onclick="selectPhase(2)" id="btn-phase-2" class="phase-btn bg-slate-800 border-2 border-slate-600 rounded-2xl p-6 text-center cursor-pointer flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full bg-slate-700 group-hover:bg-itec-green/20 flex items-center justify-center mb-4 transition-colors">
+                    <i class="ph ph-browser text-2xl group-hover:text-itec-green"></i>
+                </div>
+                <h3 class="font-bold text-xl mb-2">Fase 2</h3>
+                <p class="text-sm opacity-80">MVP Web Single-Tenant</p>
+            </button>
+
+            <!-- Phase 3 Button -->
+            <button onclick="selectPhase(3)" id="btn-phase-3" class="phase-btn bg-slate-800 border-2 border-slate-600 rounded-2xl p-6 text-center cursor-pointer flex flex-col items-center group">
+                <div class="w-12 h-12 rounded-full bg-slate-700 group-hover:bg-itec-green/20 flex items-center justify-center mb-4 transition-colors">
+                    <i class="ph ph-buildings text-2xl group-hover:text-itec-green"></i>
+                </div>
+                <h3 class="font-bold text-xl mb-2">Fase 3</h3>
+                <p class="text-sm opacity-80">SaaS Multi-Tenant</p>
+            </button>
+        </div>
+    </div>
+
+    <!-- Content Area -->
+    <div id="content-area" class="w-full max-w-6xl mx-auto bg-slate-800/50 border border-slate-700 rounded-3xl p-6 md:p-10 fade-in shadow-2xl backdrop-blur-sm" style="animation-delay: 0.2s;">
+        <!-- Dynamic content injected here -->
+    </div>
+
+    <script>
+        const phaseData = {
+            1: {
+                title: "Fase 1: Prototipo Core y Automatización Local",
+                description: "Enfoque puramente en la lógica de negocio (fórmulas de GEI, Alcances 1, 2 y 3). Sin invertir en UI descartable. Opera desatendido o por consola leyendo/escribiendo en Google Sheets.",
+                stack: ["Java", "Spring Boot", "Google Sheets API", "GHG Protocol", "CSV/Local Data"],
+                milestones: [
+                    "Configuración del motor matemático Spring Boot.",
+                    "Integración de adaptadores para Google Workspace (Sheets).",
+                    "Cálculo estático con factores de emisión locales (CAMMESA, DEFRA)."
+                ],
+                diagram: `
+                    <div class="flex flex-col items-center justify-center gap-6 py-8">
+                        <div class="arch-box rounded-xl p-4 flex items-center gap-3 w-64 justify-center text-emerald-400">
+                            <i class="ph ph-file-csv text-3xl"></i>
+                            <span class="font-semibold">Google Sheets (Input)</span>
+                        </div>
+                        
+                        <div class="flex flex-col items-center text-slate-500">
+                            <i class="ph ph-arrow-down text-2xl"></i>
+                            <span class="text-xs">Lectura API</span>
+                        </div>
+
+                        <div class="arch-box rounded-2xl p-6 border-l-4 border-l-emerald-500 w-full max-w-md relative">
+                            <h4 class="text-center font-bold text-lg mb-4 text-white">Spring Boot Core</h4>
+                            <div class="space-y-3">
+                                <div class="bg-slate-700/50 p-2 rounded text-sm text-center border border-slate-600">Adaptador de Entrada (Sheets)</div>
+                                <div class="bg-emerald-900/30 p-3 rounded text-sm text-center border border-emerald-700/50 font-semibold text-emerald-300">Motor de Cálculo (GHG Protocol)</div>
+                                <div class="bg-slate-700/50 p-2 rounded text-sm text-center border border-slate-600">Generador de Reporte (Raw Data)</div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center text-slate-500">
+                            <i class="ph ph-arrow-down text-2xl"></i>
+                            <span class="text-xs">Escritura API</span>
+                        </div>
+
+                        <div class="arch-box rounded-xl p-4 flex items-center gap-3 w-64 justify-center text-emerald-400">
+                            <i class="ph ph-file-text text-3xl"></i>
+                            <span class="font-semibold">Google Sheets (Output)</span>
+                        </div>
+                    </div>
+                `
+            },
+            2: {
+                title: "Fase 2: Aplicación Web Single-Tenant (MVP)",
+                description: "Abandono de Google Sheets como interfaz principal. Se expone el motor a través de una API REST, conectada a PostgreSQL para versionado histórico de factores, y una UI Web. Inicia la generación de certificados PDF con QR.",
+                stack: ["React / Angular", "Spring Boot API", "PostgreSQL", "Apache PDFBox", "ZXing (QR)"],
+                milestones: [
+                    "Migración de datos estáticos a Base de Datos Relacional (PostgreSQL).",
+                    "Desarrollo de API REST para carga de datos de actividad.",
+                    "Generación de PDF inmutable con QR inyectado y hash SHA-256.",
+                    "Portal público de validación (/validar/{hash})."
+                ],
+                diagram: `
+                    <div class="flex flex-col lg:flex-row items-center justify-center gap-8 py-8 w-full">
+                        <!-- Frontend -->
+                        <div class="arch-box rounded-xl p-6 flex flex-col items-center gap-3 w-48 text-cyan-400">
+                            <i class="ph ph-desktop text-5xl"></i>
+                            <span class="font-semibold text-center">Frontend UI<br><span class="text-xs text-slate-400">(Angular / React)</span></span>
+                        </div>
+                        
+                        <!-- Flow arrow -->
+                        <div class="flex lg:flex-col items-center text-slate-500">
+                            <i class="ph ph-arrow-right text-2xl hidden lg:block"></i>
+                            <i class="ph ph-arrow-down text-2xl block lg:hidden"></i>
+                            <span class="text-xs text-center">JSON / REST</span>
+                        </div>
+
+                        <!-- Backend -->
+                        <div class="arch-box rounded-2xl p-6 border-t-4 border-t-cyan-500 w-full max-w-sm flex-1">
+                            <h4 class="text-center font-bold text-lg mb-4 text-white">Spring Boot API REST</h4>
+                            <div class="space-y-3">
+                                <div class="bg-slate-700/50 p-2 rounded text-sm text-center border border-slate-600">Controladores REST</div>
+                                <div class="bg-emerald-900/30 p-2 rounded text-sm text-center border border-emerald-700/50 text-emerald-300">Motor GHG (Reutilizado F1)</div>
+                                <div class="bg-purple-900/30 p-2 rounded text-sm text-center border border-purple-700/50 text-purple-300 flex items-center justify-center gap-2">
+                                    <i class="ph ph-file-pdf"></i> Módulo PDFBox + QR
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Flow arrows output -->
+                        <div class="flex flex-col items-center gap-8 text-slate-500">
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-arrow-right text-2xl hidden lg:block"></i>
+                                <i class="ph ph-arrow-down text-2xl block lg:hidden"></i>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <i class="ph ph-arrow-right text-2xl hidden lg:block"></i>
+                                <i class="ph ph-arrow-down text-2xl block lg:hidden"></i>
+                            </div>
+                        </div>
+
+                        <!-- Storage / DB -->
+                        <div class="flex flex-col gap-4">
+                            <div class="arch-box rounded-xl p-4 flex items-center gap-3 w-56 text-purple-400">
+                                <i class="ph ph-certificate text-3xl"></i>
+                                <div>
+                                    <span class="font-semibold block text-sm">Certificado PDF</span>
+                                    <span class="text-xs text-slate-400">Hash Inmutable</span>
+                                </div>
+                            </div>
+                            <div class="arch-box rounded-xl p-4 flex items-center gap-3 w-56 text-blue-400">
+                                <i class="ph ph-database text-3xl"></i>
+                                <div>
+                                    <span class="font-semibold block text-sm">PostgreSQL</span>
+                                    <span class="text-xs text-slate-400">Tablas de Factores/Mediciones</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            3: {
+                title: "Fase 3: Escalado SaaS Multi-Tenant",
+                description: "Plataforma completa donde múltiples empresas operan con datos aislados. Incorpora seguridad avanzada, gestión de roles (Empresas vs. Auditores ITEC), discriminación por inquilino y firma digital legal.",
+                stack: ["Spring Security & JWT", "Hibernate @TenantId / RLS", "Firma PAdES (Bouncy Castle)", "Microservicios/Modular Monolith"],
+                milestones: [
+                    "Aislamiento de datos con discriminador (tenant_id) en PostgreSQL / Row-Level Security.",
+                    "Autenticación y Roles RBAC (JWT con contexto de organización).",
+                    "Firma Digital Avanzada (PAdES) con certificados criptográficos ITEC (.p12).",
+                    "Tableros de control consolidados para Auditores ITEC."
+                ],
+                diagram: `
+                    <div class="flex flex-col items-center py-6 w-full">
+                        <!-- Users -->
+                        <div class="flex justify-center gap-4 md:gap-12 w-full mb-6">
+                            <div class="flex flex-col items-center text-slate-300">
+                                <div class="bg-slate-700 rounded-full p-3 mb-2"><i class="ph ph-buildings text-xl"></i></div>
+                                <span class="text-xs font-semibold">Empresa A</span>
+                            </div>
+                            <div class="flex flex-col items-center text-slate-300">
+                                <div class="bg-slate-700 rounded-full p-3 mb-2"><i class="ph ph-buildings text-xl"></i></div>
+                                <span class="text-xs font-semibold">Empresa B</span>
+                            </div>
+                            <div class="flex flex-col items-center text-amber-400">
+                                <div class="bg-amber-900/40 rounded-full p-3 mb-2"><i class="ph ph-shield-check text-xl"></i></div>
+                                <span class="text-xs font-semibold">Auditor ITEC</span>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center text-slate-500 mb-2">
+                            <span class="text-xs border border-slate-600 bg-slate-800 px-3 py-1 rounded-full mb-1">Tokens JWT (Tenant_ID)</span>
+                            <i class="ph ph-arrow-down text-xl"></i>
+                        </div>
+
+                        <!-- Backend -->
+                        <div class="arch-box rounded-2xl p-6 border-t-4 border-t-amber-500 w-full max-w-2xl mb-6 relative">
+                            <h4 class="text-center font-bold text-lg mb-4 text-white">SaaS Spring Boot Core</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="bg-slate-700/50 p-3 rounded border border-slate-600 flex flex-col items-center text-center">
+                                    <i class="ph ph-lock-key text-xl text-amber-400 mb-1"></i>
+                                    <span class="text-sm font-semibold">Spring Security</span>
+                                    <span class="text-xs text-slate-400">Filtro TenantContext</span>
+                                </div>
+                                <div class="bg-slate-700/50 p-3 rounded border border-slate-600 flex flex-col items-center text-center">
+                                    <i class="ph ph-signature text-xl text-emerald-400 mb-1"></i>
+                                    <span class="text-sm font-semibold">Firma PAdES</span>
+                                    <span class="text-xs text-slate-400">Bouncy Castle PKCS#7</span>
+                                </div>
+                                <div class="col-span-1 md:col-span-2 bg-emerald-900/30 p-3 rounded border border-emerald-700/50 text-emerald-300 text-center text-sm font-semibold">
+                                    Motor GHG Protocol Aislado
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-col items-center text-slate-500 mb-2">
+                            <i class="ph ph-arrow-down text-xl"></i>
+                        </div>
+
+                        <!-- Database -->
+                        <div class="arch-box rounded-2xl p-5 border-l-4 border-l-blue-500 w-full max-w-2xl bg-slate-900">
+                            <div class="flex items-center justify-center gap-2 mb-4 text-blue-400">
+                                <i class="ph ph-database text-2xl"></i>
+                                <h4 class="font-bold text-lg text-white">PostgreSQL Multi-Tenant</h4>
+                            </div>
+                            <div class="space-y-2 text-sm">
+                                <div class="bg-slate-800 p-2 rounded flex justify-between items-center border border-slate-700">
+                                    <span>Mediciones Empresa A</span>
+                                    <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded">tenant_id = A</span>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded flex justify-between items-center border border-slate-700">
+                                    <span>Mediciones Empresa B</span>
+                                    <span class="text-xs bg-blue-900/50 text-blue-300 px-2 py-1 rounded">tenant_id = B</span>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded flex justify-between items-center border border-slate-700 border-dashed">
+                                    <span class="text-slate-400">Factores Globales (CAMMESA)</span>
+                                    <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">Read-Only Global</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        function selectPhase(phaseNumber) {
+            // Update buttons
+            document.querySelectorAll('.phase-btn').forEach((btn, index) => {
+                if(index + 1 === phaseNumber) {
+                    btn.classList.add('active', 'border-itec-green');
+                    btn.classList.remove('bg-slate-800', 'border-slate-600');
+                } else {
+                    btn.classList.remove('active', 'border-itec-green');
+                    btn.classList.add('bg-slate-800', 'border-slate-600');
+                }
+            });
+
+            const data = phaseData[phaseNumber];
+            const contentArea = document.getElementById('content-area');
+            
+            // Re-trigger animation
+            contentArea.classList.remove('fade-in');
+            void contentArea.offsetWidth; // trigger reflow
+            contentArea.classList.add('fade-in');
+
+            // Build Milestones HTML
+            const milestonesHTML = data.milestones.map(m => `
+                <li class="flex items-start gap-2 text-slate-300">
+                    <i class="ph ph-check-circle text-itec-green mt-1 shrink-0"></i>
+                    <span>${m}</span>
+                </li>
+            `).join('');
+
+            // Build Stack HTML
+            const stackHTML = data.stack.map(s => `
+                <span class="bg-slate-700/50 text-slate-300 border border-slate-600 px-3 py-1 rounded-full text-xs font-medium">
+                    ${s}
+                </span>
+            `).join('');
+
+            contentArea.innerHTML = `
+                <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+                    <!-- Text Content -->
+                    <div class="xl:col-span-1 flex flex-col gap-6">
+                        <div>
+                            <h2 class="text-2xl md:text-3xl font-bold mb-3 text-white">${data.title}</h2>
+                            <p class="text-slate-400 leading-relaxed">${data.description}</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-200 mb-3 flex items-center gap-2">
+                                <i class="ph ph-stack text-itec-green"></i> Tech Stack
+                            </h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${stackHTML}
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="text-lg font-semibold text-slate-200 mb-3 flex items-center gap-2">
+                                <i class="ph ph-flag-banner text-itec-green"></i> Hitos Clave
+                            </h3>
+                            <ul class="space-y-3">
+                                ${milestonesHTML}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Diagram -->
+                    <div class="xl:col-span-2 bg-slate-900/50 rounded-2xl border border-slate-700 p-4 md:p-8 flex items-center justify-center overflow-x-auto">
+                        <div class="min-w-[600px] w-full">
+                            ${data.diagram}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Initialize with phase 1
+        window.onload = () => {
+            selectPhase(1);
+        };
+    </script>
+</body>
+</html>
